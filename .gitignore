@@ -1,0 +1,12 @@
+# OS / editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Never commit secrets or exports
+wp-config.php
+*.sql
+*.sql.gz
+*.zip
+.env
