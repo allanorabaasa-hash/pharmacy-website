@@ -1,0 +1,98 @@
+/*
+Theme Name:   God's Care Pharmacy
+Theme URI:    https://github.com/allanorabaasa-hash/pharmacy-website
+Description:  Child theme of Twenty Twenty-Five for God's Care Pharmacy. Adds brand colours, an opening-hours indicator and a WhatsApp contact button.
+Author:       Allan
+Template:     twentytwentyfive
+Version:      1.0.0
+Requires at least: 6.7
+Requires PHP: 7.4
+License:      GPL-2.0-or-later
+Text Domain:  pharmacy-child
+*/
+
+/* ---------- Buttons ---------- */
+.wp-block-button__link {
+	border-radius: 999px;
+	transition: transform .15s ease, box-shadow .15s ease;
+}
+.wp-block-button__link:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 6px 18px rgba(14, 77, 74, .18);
+}
+
+/* ---------- Service / product cards ---------- */
+.gcp-card {
+	background: var(--wp--preset--color--base);
+	border: 1px solid var(--wp--preset--color--accent-6);
+	border-radius: 16px;
+	padding: 1.5rem;
+	height: 100%;
+}
+.gcp-card:hover { border-color: var(--wp--preset--color--accent-1); }
+
+/* ---------- Hero ---------- */
+.gcp-hero { position: relative; overflow: hidden; }
+.gcp-hero::after {
+	/* subtle pharmacy cross watermark */
+	content: "";
+	position: absolute;
+	right: -40px;
+	top: 50%;
+	width: 220px;
+	height: 220px;
+	transform: translateY(-50%);
+	background:
+		linear-gradient(var(--wp--preset--color--accent-1), var(--wp--preset--color--accent-1)) center / 34% 100% no-repeat,
+		linear-gradient(var(--wp--preset--color--accent-1), var(--wp--preset--color--accent-1)) center / 100% 34% no-repeat;
+	opacity: .07;
+	pointer-events: none;
+}
+
+/* ---------- Opening-hours badge: [gcp_open_status] ---------- */
+.gcp-open-status {
+	display: inline-flex;
+	align-items: center;
+	gap: .45em;
+	padding: .3em .85em;
+	border-radius: 999px;
+	font-size: .875rem;
+	font-weight: 600;
+	background: var(--wp--preset--color--accent-5);
+	color: var(--wp--preset--color--contrast);
+}
+.gcp-open-status::before {
+	content: "";
+	width: .55em;
+	height: .55em;
+	border-radius: 50%;
+	background: var(--wp--preset--color--accent-4);
+}
+.gcp-open-status.is-open::before   { background: #1f9d55; }
+.gcp-open-status.is-closed::before { background: #c0392b; }
+
+/* ---------- Floating WhatsApp button ---------- */
+.gcp-whatsapp {
+	position: fixed;
+	right: 18px;
+	bottom: 18px;
+	z-index: 999;
+	display: flex;
+	align-items: center;
+	gap: .5em;
+	padding: .75em 1.1em;
+	border-radius: 999px;
+	background: #25d366;
+	color: #fff;
+	font-weight: 600;
+	text-decoration: none;
+	box-shadow: 0 6px 20px rgba(0, 0, 0, .18);
+}
+.gcp-whatsapp:hover,
+.gcp-whatsapp:focus { color: #fff; background: #1ebe5b; }
+.gcp-whatsapp svg { width: 22px; height: 22px; fill: currentColor; }
+
+@media (max-width: 600px) {
+	.gcp-whatsapp span { display: none; } /* icon only on phones */
+	.gcp-hero::after { display: none; }
+}
