@@ -65,6 +65,12 @@
 				<li><a href="<?php echo esc_url( home_url( '/health-tips/' ) ); ?>">Health tips</a></li>
 				<!-- /wp:list-item -->
 				<!-- wp:list-item -->
+				<li><a href="<?php echo esc_url( home_url( '/prescription-refill/' ) ); ?>">Prescription refills</a></li>
+				<!-- /wp:list-item -->
+				<!-- wp:list-item -->
+				<li><a href="<?php echo esc_url( home_url( '/health-blog/' ) ); ?>">Health blog</a></li>
+				<!-- /wp:list-item -->
+				<!-- wp:list-item -->
 				<li><a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Contact</a></li>
 				<!-- /wp:list-item -->
 			</ul>

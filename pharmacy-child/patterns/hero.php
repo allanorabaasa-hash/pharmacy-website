@@ -8,6 +8,9 @@
  *
  * @package pharmacy-child
  */
+
+// Link to the shop once WooCommerce is installed; until then, to Services.
+$gcp_has_shop = class_exists( 'WooCommerce' );
 ?>
 <!-- wp:group {"align":"full","className":"gcp-hero","backgroundColor":"accent-3","textColor":"accent-2","layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignfull gcp-hero has-accent-2-color has-accent-3-background-color has-text-color has-background">
@@ -50,7 +53,7 @@
 				<div class="wp-block-button"><a class="wp-block-button__link has-accent-3-color has-white-background-color has-text-color has-background wp-element-button" href="<?php echo esc_url( home_url( '/prescription-refill/' ) ); ?>">Request a prescription refill</a></div>
 				<!-- /wp:button -->
 				<!-- wp:button {"className":"is-style-outline gcp-btn-light"} -->
-				<div class="wp-block-button is-style-outline gcp-btn-light"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( home_url( '/shop/' ) ); ?>">Shop health products</a></div>
+				<div class="wp-block-button is-style-outline gcp-btn-light"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( home_url( $gcp_has_shop ? '/shop/' : '/services/' ) ); ?>"><?php echo $gcp_has_shop ? 'Shop health products' : 'See our services'; ?></a></div>
 				<!-- /wp:button -->
 			</div>
 			<!-- /wp:buttons -->
