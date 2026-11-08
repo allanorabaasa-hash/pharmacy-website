@@ -87,6 +87,17 @@ function gcp_whatsapp_button() {
 add_action( 'wp_footer', 'gcp_whatsapp_button' );
 
 /**
+ * Group the God's Care page patterns under their own category in the editor.
+ */
+function gcp_register_pattern_category() {
+	register_block_pattern_category(
+		'gods-care',
+		array( 'label' => __( "God's Care pages", 'pharmacy-child' ) )
+	);
+}
+add_action( 'init', 'gcp_register_pattern_category' );
+
+/**
  * Light hardening: don't advertise the WordPress version in the page source.
  */
 remove_action( 'wp_head', 'wp_generator' );

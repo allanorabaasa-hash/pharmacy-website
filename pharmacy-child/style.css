@@ -96,3 +96,37 @@ Text Domain:  pharmacy-child
 	.gcp-whatsapp span { display: none; } /* icon only on phones */
 	.gcp-hero::after { display: none; }
 }
+
+/* ---------- Page sections (used by the page patterns) ---------- */
+.gcp-section {
+	padding-top: clamp(2.5rem, 6vw, 4.5rem);
+	padding-bottom: clamp(2.5rem, 6vw, 4.5rem);
+	padding-left: var(--wp--style--root--padding-left, 1rem);
+	padding-right: var(--wp--style--root--padding-right, 1rem);
+}
+.gcp-section + .gcp-section { margin-top: 0; }
+.gcp-cta p { color: inherit; opacity: .9; }
+
+.gcp-checklist { list-style: none; padding-left: 0; }
+.gcp-checklist li { position: relative; padding-left: 2rem; margin-bottom: .75rem; }
+.gcp-checklist li::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: .2em;
+	width: 1.25rem;
+	height: 1.25rem;
+	border-radius: 50%;
+	background: var(--wp--preset--color--accent-1) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M9.5 16.2 5.3 12l-1.4 1.4 5.6 5.6 12-12-1.4-1.4z'/%3E%3C/svg%3E") center / 70% no-repeat;
+}
+
+/* Reminder notes and photo placeholders: replace before going live */
+.gcp-note,
+.gcp-photo-placeholder {
+	border: 2px dashed var(--wp--preset--color--accent-6);
+	border-radius: 12px;
+	padding: 1rem 1.25rem;
+	color: var(--wp--preset--color--accent-4);
+	font-size: .95rem;
+}
+.gcp-photo-placeholder { aspect-ratio: 1; display: flex; align-items: center; text-align: center; }
