@@ -87,6 +87,15 @@ function gcp_whatsapp_button() {
 add_action( 'wp_footer', 'gcp_whatsapp_button' );
 
 /**
+ * Shortcode blocks inside the header/footer template parts are not passed
+ * through the_content, so run shortcodes on them directly.
+ */
+function gcp_render_shortcode_block( $content ) {
+	return do_shortcode( $content );
+}
+add_filter( 'render_block_core/shortcode', 'gcp_render_shortcode_block' );
+
+/**
  * Group the God's Care page patterns under their own category in the editor.
  */
 function gcp_register_pattern_category() {
