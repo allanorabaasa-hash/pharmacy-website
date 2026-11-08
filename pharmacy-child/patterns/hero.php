@@ -2,38 +2,102 @@
 /**
  * Title: God's Care hero
  * Slug: pharmacy-child/hero
- * Categories: banner, featured
+ * Categories: banner, featured, gods-care
  * Keywords: hero, pharmacy, homepage
- * Description: Homepage banner with headline, opening-hours badge and two calls to action.
+ * Description: Deep green banner with headline, calls to action and a pharmacy dispensing-label card showing live opening status.
  *
  * @package pharmacy-child
  */
 ?>
-<!-- wp:group {"className":"gcp-hero","align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60","left":"var:preset|spacing|40","right":"var:preset|spacing|40"}}},"backgroundColor":"accent-2","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull gcp-hero has-accent-2-background-color has-background" style="padding-top:var(--wp--preset--spacing--60);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--60);padding-left:var(--wp--preset--spacing--40)">
+<!-- wp:group {"align":"full","className":"gcp-hero","backgroundColor":"accent-3","textColor":"accent-2","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignfull gcp-hero has-accent-2-color has-accent-3-background-color has-text-color has-background">
+	<!-- wp:columns {"verticalAlignment":"center","align":"wide","className":"gcp-hero-grid"} -->
+	<div class="wp-block-columns alignwide are-vertically-aligned-center gcp-hero-grid">
+		<!-- wp:column {"verticalAlignment":"center","width":"58%"} -->
+		<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:58%">
+			<!-- wp:paragraph {"className":"gcp-hero-kicker"} -->
+			<p class="gcp-hero-kicker">Community pharmacy on Ruhandiika Street, Fort Portal City</p>
+			<!-- /wp:paragraph -->
 
-	<!-- wp:shortcode -->
-	[gcp_open_status]
-	<!-- /wp:shortcode -->
+			<!-- wp:heading {"level":1,"className":"gcp-hero-title","textColor":"white"} -->
+			<h1 class="wp-block-heading gcp-hero-title has-white-color has-text-color">The right medicine, and the advice to take it well.</h1>
+			<!-- /wp:heading -->
 
-	<!-- wp:heading {"level":1} -->
-	<h1 class="wp-block-heading"><?php esc_html_e( 'Your health, in caring hands.', 'pharmacy-child' ); ?></h1>
-	<!-- /wp:heading -->
+			<!-- wp:paragraph {"className":"gcp-hero-lead"} -->
+			<p class="gcp-hero-lead">Genuine medicines from licensed suppliers, quick health checks, and a pharmacist who takes the time to explain.</p>
+			<!-- /wp:paragraph -->
 
-	<!-- wp:paragraph {"fontSize":"large"} -->
-	<p class="has-large-font-size"><?php esc_html_e( "Genuine medicines, friendly pharmacist advice and everyday health products at God's Care Pharmacy.", 'pharmacy-child' ); ?></p>
-	<!-- /wp:paragraph -->
+			<!-- wp:buttons {"className":"gcp-hero-actions"} -->
+			<div class="wp-block-buttons gcp-hero-actions">
+				<!-- wp:button {"backgroundColor":"white","textColor":"accent-3"} -->
+				<div class="wp-block-button"><a class="wp-block-button__link has-accent-3-color has-white-background-color has-text-color has-background wp-element-button" href="<?php echo esc_url( home_url( '/prescription-refill/' ) ); ?>">Request a prescription refill</a></div>
+				<!-- /wp:button -->
+				<!-- wp:button {"className":"is-style-outline gcp-btn-light"} -->
+				<div class="wp-block-button is-style-outline gcp-btn-light"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( home_url( '/shop/' ) ); ?>">Shop health products</a></div>
+				<!-- /wp:button -->
+			</div>
+			<!-- /wp:buttons -->
+		</div>
+		<!-- /wp:column -->
 
-	<!-- wp:buttons -->
-	<div class="wp-block-buttons">
-		<!-- wp:button -->
-		<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( home_url( '/shop/' ) ); ?>"><?php esc_html_e( 'Shop health products', 'pharmacy-child' ); ?></a></div>
-		<!-- /wp:button -->
-		<!-- wp:button {"className":"is-style-outline"} -->
-		<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( home_url( '/prescription-refill/' ) ); ?>"><?php esc_html_e( 'Request a prescription refill', 'pharmacy-child' ); ?></a></div>
-		<!-- /wp:button -->
+		<!-- wp:column {"verticalAlignment":"center","width":"42%"} -->
+		<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:42%">
+			<!-- wp:group {"className":"gcp-label","layout":{"type":"default"}} -->
+			<div class="wp-block-group gcp-label">
+				<!-- wp:paragraph {"className":"gcp-label-head"} -->
+				<p class="gcp-label-head"><strong>God's Care Pharmacy</strong><span class="gcp-label-rx">Rx</span></p>
+				<!-- /wp:paragraph -->
+
+				<!-- wp:paragraph {"className":"gcp-label-row"} -->
+				<p class="gcp-label-row"><span class="gcp-label-key">Today</span>[gcp_open_status]</p>
+				<!-- /wp:paragraph -->
+
+				<!-- wp:paragraph {"className":"gcp-label-row"} -->
+				<p class="gcp-label-row"><span class="gcp-label-key">Where</span>Ruhandiika Street, Fort Portal City</p>
+				<!-- /wp:paragraph -->
+
+				<!-- wp:paragraph {"className":"gcp-label-row"} -->
+				<p class="gcp-label-row"><span class="gcp-label-key">Ask us</span><a href="https://wa.me/256745546101">0745 546 101 on WhatsApp</a></p>
+				<!-- /wp:paragraph -->
+
+				<!-- wp:paragraph {"className":"gcp-label-foot"} -->
+				<p class="gcp-label-foot">Dispensed with care. Keep out of reach of children.</p>
+				<!-- /wp:paragraph -->
+			</div>
+			<!-- /wp:group -->
+		</div>
+		<!-- /wp:column -->
 	</div>
-	<!-- /wp:buttons -->
+	<!-- /wp:columns -->
+</div>
+<!-- /wp:group -->
 
+<!-- wp:group {"align":"full","className":"gcp-trust","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignfull gcp-trust">
+	<!-- wp:columns {"align":"wide"} -->
+	<div class="wp-block-columns alignwide">
+		<!-- wp:column -->
+		<div class="wp-block-column">
+			<!-- wp:paragraph -->
+			<p><strong>Licensed suppliers only</strong><br>No street or unverified stock.</p>
+			<!-- /wp:paragraph -->
+		</div>
+		<!-- /wp:column -->
+		<!-- wp:column -->
+		<div class="wp-block-column">
+			<!-- wp:paragraph -->
+			<p><strong>Expiry checked</strong><br>Every batch tracked before it reaches the shelf.</p>
+			<!-- /wp:paragraph -->
+		</div>
+		<!-- /wp:column -->
+		<!-- wp:column -->
+		<div class="wp-block-column">
+			<!-- wp:paragraph -->
+			<p><strong>Free pharmacist advice</strong><br>In store, by phone or on WhatsApp.</p>
+			<!-- /wp:paragraph -->
+		</div>
+		<!-- /wp:column -->
+	</div>
+	<!-- /wp:columns -->
 </div>
 <!-- /wp:group -->

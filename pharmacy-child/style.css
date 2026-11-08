@@ -1,65 +1,385 @@
 /*
 Theme Name:   God's Care Pharmacy
 Theme URI:    https://github.com/allanorabaasa-hash/pharmacy-website
-Description:  Child theme of Twenty Twenty-Five for God's Care Pharmacy. Adds brand colours, an opening-hours indicator and a WhatsApp contact button.
+Description:  Child theme of Twenty Twenty-Five for God's Care Pharmacy, Fort Portal City. Custom header and footer, dispensing-label hero, page patterns, opening-hours indicator and WhatsApp contact button.
 Author:       Allan
 Template:     twentytwentyfive
-Version:      1.2.0
+Version:      1.3.0
 Requires at least: 6.7
 Requires PHP: 7.4
 License:      GPL-2.0-or-later
 Text Domain:  pharmacy-child
 */
 
-/* ---------- Buttons ---------- */
-.wp-block-button__link {
+/* ==========================================================================
+   Base
+   ========================================================================== */
+:root {
+	--gcp-radius: 16px;
+	--gcp-radius-sm: 10px;
+	--gcp-gutter: clamp(1rem, 4vw, 2rem);
+	--gcp-section: clamp(3.5rem, 8vw, 6.5rem);
+	--gcp-shadow: 0 1px 2px rgba(15, 59, 51, .06), 0 12px 32px rgba(15, 59, 51, .10);
+}
+
+body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+::selection { background: var(--wp--preset--color--accent-2); color: var(--wp--preset--color--accent-3); }
+
+a:focus-visible,
+.wp-block-button__link:focus-visible {
+	outline: 3px solid var(--wp--preset--color--honey);
+	outline-offset: 3px;
+	border-radius: 6px;
+}
+
+/* Main content starts flush under the header */
+main.wp-block-group { margin-top: 0 !important; }
+.wp-block-post-content > .alignfull:first-child { margin-top: 0; }
+.wp-block-post-content > * + .alignfull,
+.wp-block-post-content > .alignfull + * { margin-block-start: 0; }
+
+/* Outline buttons */
+.wp-block-button.is-style-outline > .wp-block-button__link {
+	border: 1.5px solid currentColor;
+	background: transparent;
+	color: var(--wp--preset--color--accent-1);
+}
+.wp-block-button.is-style-outline > .wp-block-button__link:hover {
+	background: var(--wp--preset--color--accent-1);
+	border-color: var(--wp--preset--color--accent-1);
+	color: var(--wp--preset--color--white);
+}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+.gcp-header {
+	position: sticky;
+	top: 0;
+	z-index: 50;
+	background: rgba(251, 252, 250, .92);
+	backdrop-filter: saturate(1.4) blur(10px);
+	-webkit-backdrop-filter: saturate(1.4) blur(10px);
+	border-bottom: 1px solid var(--wp--preset--color--accent-6);
+	padding-left: var(--gcp-gutter);
+	padding-right: var(--gcp-gutter);
+}
+.admin-bar .gcp-header { top: 32px; }
+@media (max-width: 782px) { .admin-bar .gcp-header { top: 0; } }
+
+.gcp-header-inner { padding-top: .85rem; padding-bottom: .85rem; gap: 1.5rem; }
+.gcp-header-actions { gap: 1.75rem; }
+
+/* Brand mark: a green pharmacy cross before the site title */
+.gcp-brand {
+	display: flex;
+	align-items: center;
+	gap: .7rem;
+	margin: 0;
+	font-family: var(--wp--preset--font-family--literata);
+	font-weight: 600;
+	font-size: 1.3rem;
+	letter-spacing: -.01em;
+	line-height: 1.1;
+}
+.gcp-brand a { color: var(--wp--preset--color--accent-3); text-decoration: none; }
+.gcp-brand::before {
+	content: "";
+	flex: 0 0 34px;
+	height: 34px;
+	border-radius: 9px;
+	background:
+		linear-gradient(#fff, #fff) center / 36% 70% no-repeat,
+		linear-gradient(#fff, #fff) center / 70% 36% no-repeat,
+		var(--wp--preset--color--accent-1);
+}
+.gcp-brand-light a { color: var(--wp--preset--color--white); }
+
+.gcp-nav { font-weight: 600; font-size: .98rem; }
+.gcp-nav .wp-block-navigation-item__content { color: var(--wp--preset--color--contrast); text-decoration: none; padding: .25rem 0; }
+.gcp-nav .wp-block-navigation-item__content:hover,
+.gcp-nav .current-menu-item > .wp-block-navigation-item__content { color: var(--wp--preset--color--accent-1); }
+.gcp-nav .current-menu-item > .wp-block-navigation-item__content { box-shadow: inset 0 -2px 0 var(--wp--preset--color--accent-1); }
+
+.gcp-header-cta .wp-block-button__link { padding: .6rem 1.1rem; font-size: .95rem; }
+
+@media (max-width: 900px) {
+	.gcp-header .gcp-header-cta { display: none !important; } /* floating WhatsApp button covers mobile */
+}
+
+/* ==========================================================================
+   Hero with dispensing label
+   ========================================================================== */
+.gcp-hero {
+	position: relative;
+	overflow: hidden;
+	padding: clamp(3.5rem, 9vw, 7rem) var(--gcp-gutter);
+	background-image:
+		radial-gradient(circle at 85% 20%, rgba(27, 127, 92, .55), transparent 55%),
+		radial-gradient(circle at 10% 110%, rgba(27, 127, 92, .35), transparent 50%);
+}
+.gcp-hero-grid { position: relative; gap: clamp(2rem, 5vw, 4.5rem); }
+
+.gcp-hero-kicker {
+	display: inline-block;
+	margin-bottom: 1.25rem;
+	padding: .35rem .85rem;
+	border: 1px solid rgba(234, 244, 239, .28);
 	border-radius: 999px;
-	transition: transform .15s ease, box-shadow .15s ease;
+	font-size: .9rem;
+	color: var(--wp--preset--color--accent-2);
 }
-.wp-block-button__link:hover {
-	transform: translateY(-1px);
-	box-shadow: 0 6px 18px rgba(14, 77, 74, .18);
+.gcp-hero-title {
+	font-size: clamp(2.4rem, 5.4vw, 4.1rem);
+	line-height: 1.06;
+	letter-spacing: -.025em;
+	max-width: 15ch;
+	margin-top: 0;
 }
+.gcp-hero-lead {
+	font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+	max-width: 46ch;
+	color: rgba(234, 244, 239, .86);
+	margin-top: 1.25rem;
+}
+.gcp-hero-actions { margin-top: 2rem; gap: .75rem; }
+.gcp-btn-light > .wp-block-button__link { color: var(--wp--preset--color--white) !important; border-color: rgba(255, 255, 255, .5) !important; }
+.gcp-btn-light > .wp-block-button__link:hover { background: rgba(255, 255, 255, .1) !important; border-color: #fff !important; }
 
-/* ---------- Service / product cards ---------- */
-.gcp-card {
-	background: var(--wp--preset--color--base);
-	border: 1px solid var(--wp--preset--color--accent-6);
-	border-radius: 16px;
-	padding: 1.5rem;
-	height: 100%;
+/* The label */
+.gcp-label {
+	position: relative;
+	background: var(--wp--preset--color--white);
+	color: var(--wp--preset--color--contrast);
+	border-radius: 14px;
+	padding: 1.5rem 1.6rem 1.2rem;
+	box-shadow: 0 30px 60px rgba(4, 25, 20, .35);
+	max-width: 440px;
+	margin-left: auto;
+	transform: rotate(-1.2deg);
 }
-.gcp-card:hover { border-color: var(--wp--preset--color--accent-1); }
-
-/* ---------- Hero ---------- */
-.gcp-hero { position: relative; overflow: hidden; }
-.gcp-hero::after {
-	/* subtle pharmacy cross watermark */
+.gcp-label::before,
+.gcp-label::after {
+	/* punched notches, like a tear-off label */
 	content: "";
 	position: absolute;
-	right: -40px;
-	top: 50%;
-	width: 220px;
-	height: 220px;
-	transform: translateY(-50%);
-	background:
-		linear-gradient(var(--wp--preset--color--accent-1), var(--wp--preset--color--accent-1)) center / 34% 100% no-repeat,
-		linear-gradient(var(--wp--preset--color--accent-1), var(--wp--preset--color--accent-1)) center / 100% 34% no-repeat;
-	opacity: .07;
-	pointer-events: none;
+	top: 58px;
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	background: var(--wp--preset--color--accent-3);
+}
+.gcp-label::before { left: -9px; }
+.gcp-label::after { right: -9px; }
+.gcp-label p { margin: 0; }
+.gcp-label-head {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-bottom: 1rem;
+	margin-bottom: .6rem !important;
+	border-bottom: 2px dashed var(--wp--preset--color--accent-6);
+	font-family: var(--wp--preset--font-family--literata);
+	font-size: 1.2rem;
+	color: var(--wp--preset--color--accent-3);
+}
+.gcp-label-rx {
+	font-family: var(--wp--preset--font-family--literata);
+	font-style: italic;
+	font-weight: 600;
+	font-size: 1.15rem;
+	color: var(--wp--preset--color--white);
+	background: var(--wp--preset--color--accent-1);
+	border-radius: 8px;
+	padding: .1rem .55rem;
+}
+.gcp-label-row {
+	display: grid;
+	grid-template-columns: 4.5rem 1fr;
+	align-items: center;
+	gap: .75rem;
+	padding: .7rem 0;
+	border-bottom: 1px solid var(--wp--preset--color--accent-5);
+	font-size: .98rem;
+}
+.gcp-label-key { color: var(--wp--preset--color--accent-4); font-size: .85rem; }
+.gcp-label-row a { color: var(--wp--preset--color--accent-1); font-weight: 600; }
+.gcp-label-foot {
+	padding-top: .9rem;
+	font-size: .82rem;
+	color: var(--wp--preset--color--accent-4);
+	font-style: italic;
 }
 
-/* ---------- Opening-hours badge: [gcp_open_status] ---------- */
+@media (max-width: 781px) {
+	.gcp-label { transform: none; margin: 0 auto; }
+}
+
+/* Trust strip under the hero */
+.gcp-trust {
+	background: var(--wp--preset--color--white);
+	border-bottom: 1px solid var(--wp--preset--color--accent-6);
+	padding: 1.75rem var(--gcp-gutter);
+}
+.gcp-trust p { margin: 0; font-size: .95rem; color: var(--wp--preset--color--accent-4); line-height: 1.5; }
+.gcp-trust strong { color: var(--wp--preset--color--accent-3); font-size: 1rem; }
+.gcp-trust .wp-block-column { padding-left: 1rem; border-left: 3px solid var(--wp--preset--color--accent-1); }
+
+/* ==========================================================================
+   Sections and page headings
+   ========================================================================== */
+.gcp-section { padding: var(--gcp-section) var(--gcp-gutter); }
+.gcp-section > h2.has-text-align-center { margin-bottom: .5rem; }
+.gcp-section > h2.has-text-align-center + p.has-text-align-center {
+	max-width: 58ch;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 2.5rem;
+	color: var(--wp--preset--color--accent-4);
+}
+
+.gcp-page-head {
+	padding: clamp(3rem, 7vw, 5rem) var(--gcp-gutter) clamp(2.5rem, 5vw, 3.5rem);
+	border-bottom: 1px solid var(--wp--preset--color--accent-6);
+}
+.gcp-page-head h1 { margin-top: 0; margin-bottom: .75rem; }
+.gcp-page-head > p.has-large-font-size { max-width: var(--wp--style--global--content-size); color: var(--wp--preset--color--accent-4); margin-top: 0; }
+
+/* Dark call-to-action band */
+.gcp-cta { position: relative; overflow: hidden; }
+.gcp-section.gcp-cta > p { color: rgba(234, 244, 239, .9); max-width: 56ch; margin-left: auto; margin-right: auto; }
+
+/* ==========================================================================
+   Cards and icons
+   ========================================================================== */
+.gcp-card {
+	background: var(--wp--preset--color--white);
+	border: 1px solid var(--wp--preset--color--accent-6);
+	border-radius: var(--gcp-radius);
+	padding: 1.75rem 1.6rem;
+}
+.gcp-card h3 { margin-top: 0; margin-bottom: .5rem; }
+.gcp-card p { margin: 0; color: var(--wp--preset--color--accent-4); font-size: .98rem; }
+.wp-block-columns:has(> .gcp-card) { gap: 1.25rem; margin-bottom: 1.25rem; }
+
+.gcp-icon::before {
+	content: "";
+	display: block;
+	width: 48px;
+	height: 48px;
+	margin-bottom: 1rem;
+	border-radius: 12px;
+	background-color: var(--wp--preset--color--accent-2);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 26px;
+}
+h2.gcp-icon::before { width: 44px; height: 44px; background-size: 24px; }
+
+.gcp-icon-rx::before      { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231B7F5C' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M10.5 20.5 3.5 13.5a5 5 0 0 1 7-7l7 7a5 5 0 0 1-7 7Z'/%3E%3Cpath d='m8.5 8.5 7 7'/%3E%3C/svg%3E"); }
+.gcp-icon-consult::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231B7F5C' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z'/%3E%3Cpath d='M9 11h6M9 14h4'/%3E%3C/svg%3E"); }
+.gcp-icon-bp::before      { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231B7F5C' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 1 0-7.1 7.1L12 21.5l8.8-8.8a5 5 0 0 0 0-7.1Z'/%3E%3Cpath d='M3.5 12h4l2-3 3 6 2-3h6'/%3E%3C/svg%3E"); }
+.gcp-icon-sugar::before   { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231B7F5C' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M12 2.5s6.5 7.2 6.5 12a6.5 6.5 0 0 1-13 0c0-4.8 6.5-12 6.5-12Z'/%3E%3C/svg%3E"); }
+.gcp-icon-test::before    { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231B7F5C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 3h6M10 3v11.5a2 2 0 0 0 4 0V3'/%3E%3Cpath d='M7 21h10'/%3E%3C/svg%3E"); }
+.gcp-icon-refill::before  { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231B7F5C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 11a8 8 0 0 0-14.3-4.9L4 8'/%3E%3Cpath d='M4 3v5h5'/%3E%3Cpath d='M4 13a8 8 0 0 0 14.3 4.9L20 16'/%3E%3Cpath d='M20 21v-5h-5'/%3E%3C/svg%3E"); }
+.gcp-icon-delivery::before{ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231B7F5C' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M2 6h11v10H2zM13 9h4.5L21 12.5V16h-8z'/%3E%3Ccircle cx='6' cy='17.5' r='1.8'/%3E%3Ccircle cx='17' cy='17.5' r='1.8'/%3E%3C/svg%3E"); }
+.gcp-icon-shield::before  { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231B7F5C' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M12 2.5 4 5.5v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10v-6Z'/%3E%3Cpath d='m8.5 12 2.5 2.5 4.5-5'/%3E%3C/svg%3E"); }
+.gcp-icon-family::before  { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231B7F5C' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='8' cy='6' r='2.5'/%3E%3Ccircle cx='17' cy='9' r='2'/%3E%3Cpath d='M3.5 21v-5a4.5 4.5 0 0 1 9 0v5M13.5 21v-3.5a3.5 3.5 0 0 1 7 0V21'/%3E%3C/svg%3E"); }
+
+/* ==========================================================================
+   Content pieces
+   ========================================================================== */
+.gcp-checklist { list-style: none; padding-left: 0; margin: 0; }
+.gcp-checklist li {
+	position: relative;
+	padding: .8rem 0 .8rem 2.25rem;
+	border-bottom: 1px solid var(--wp--preset--color--accent-6);
+}
+.gcp-checklist li:last-child { border-bottom: 0; }
+.gcp-checklist li::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 1rem;
+	width: 1.35rem;
+	height: 1.35rem;
+	border-radius: 50%;
+	background: var(--wp--preset--color--accent-1) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M9.5 16.2 5.3 12l-1.4 1.4 5.6 5.6 12-12-1.4-1.4z'/%3E%3C/svg%3E") center / 70% no-repeat;
+}
+
+.gcp-tip {
+	background: var(--wp--preset--color--white);
+	border: 1px solid var(--wp--preset--color--accent-6);
+	border-left: 4px solid var(--wp--preset--color--accent-1);
+	border-radius: var(--gcp-radius-sm);
+	padding: 1.1rem 1.25rem;
+	color: var(--wp--preset--color--accent-4);
+}
+.gcp-tip strong { color: var(--wp--preset--color--accent-3); display: block; margin-bottom: .2rem; }
+
+.gcp-alert {
+	background: #FFF5F2;
+	border: 1px solid #F2CFC6;
+	border-left: 4px solid #C2412D;
+	border-radius: var(--gcp-radius-sm);
+	padding: 1rem 1.25rem;
+	color: #5A2A22;
+}
+.gcp-alert strong { color: #9C2F1F; }
+.gcp-section > .gcp-alert { max-width: var(--wp--style--global--wide-size); box-sizing: border-box; }
+
+.gcp-note,
+.gcp-photo-placeholder {
+	border: 2px dashed var(--wp--preset--color--accent-6);
+	border-radius: 12px;
+	padding: 1rem 1.25rem;
+	color: var(--wp--preset--color--accent-4);
+	font-size: .95rem;
+}
+
+/* Health tips article */
+.gcp-chips { gap: .5rem; margin-top: 1.5rem; }
+.gcp-chips .wp-block-button__link { padding: .45rem .95rem; font-size: .92rem; background: var(--wp--preset--color--white) !important; }
+.gcp-chips .wp-block-button__link:hover { background: var(--wp--preset--color--accent-1) !important; }
+.gcp-article h2 {
+	font-size: var(--wp--preset--font-size--x-large);
+	margin-top: 3.5rem;
+	padding-top: 2.5rem;
+	border-top: 1px solid var(--wp--preset--color--accent-6);
+	scroll-margin-top: 90px;
+}
+.gcp-article h2:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+.gcp-article li { margin-bottom: .45rem; }
+.gcp-article li::marker { color: var(--wp--preset--color--accent-1); }
+.gcp-ask {
+	margin-top: 3.5rem;
+	background: var(--wp--preset--color--accent-2);
+	border-radius: var(--gcp-radius);
+	padding: 2rem;
+}
+.gcp-ask h3 { margin-top: 0; }
+
+/* Map */
+.gcp-map iframe { display: block; width: 100%; height: 400px; border: 0; border-radius: var(--gcp-radius); }
+
+/* Latest posts list */
+.wp-block-latest-posts li { padding: .9rem 0; border-bottom: 1px solid var(--wp--preset--color--accent-6); }
+.wp-block-latest-posts a { font-weight: 700; text-decoration: none; color: var(--wp--preset--color--accent-3); }
+
+/* ==========================================================================
+   Opening-hours badge: [gcp_open_status]
+   ========================================================================== */
 .gcp-open-status {
 	display: inline-flex;
 	align-items: center;
 	gap: .45em;
-	padding: .3em .85em;
+	padding: .25em .75em;
 	border-radius: 999px;
-	font-size: .875rem;
-	font-weight: 600;
+	font-size: .88rem;
+	font-weight: 700;
 	background: var(--wp--preset--color--accent-5);
 	color: var(--wp--preset--color--contrast);
+	width: fit-content;
 }
 .gcp-open-status::before {
 	content: "";
@@ -68,10 +388,42 @@ Text Domain:  pharmacy-child
 	border-radius: 50%;
 	background: var(--wp--preset--color--accent-4);
 }
-.gcp-open-status.is-open::before   { background: #1f9d55; }
-.gcp-open-status.is-closed::before { background: #c0392b; }
+.gcp-open-status.is-open   { background: #E3F4EA; color: #145C3F; }
+.gcp-open-status.is-open::before   { background: #1F9D55; box-shadow: 0 0 0 3px rgba(31, 157, 85, .2); }
+.gcp-open-status.is-closed { background: #FBEAE7; color: #8A2A1C; }
+.gcp-open-status.is-closed::before { background: #C0392B; }
 
-/* ---------- Floating WhatsApp button ---------- */
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.gcp-footer {
+	padding: clamp(3rem, 7vw, 5rem) var(--gcp-gutter) 2rem;
+	margin-top: 0;
+}
+.gcp-footer p { color: rgba(234, 244, 239, .78); font-size: .97rem; }
+.gcp-footer a { color: var(--wp--preset--color--white); text-decoration: none; }
+.gcp-footer a:hover { text-decoration: underline; }
+.gcp-footer-title {
+	font-family: var(--wp--preset--font-family--manrope) !important;
+	font-size: .95rem !important;
+	font-weight: 700 !important;
+	letter-spacing: 0 !important;
+	color: var(--wp--preset--color--white) !important;
+	margin-bottom: .75rem;
+}
+.gcp-footer-links { list-style: none; padding: 0; margin: 0; }
+.gcp-footer-links li { margin-bottom: .4rem; }
+.gcp-footer-bottom {
+	margin-top: 3rem;
+	padding-top: 1.5rem;
+	border-top: 1px solid rgba(234, 244, 239, .15);
+}
+.gcp-footer-bottom p { margin: 0; color: rgba(234, 244, 239, .6); }
+.gcp-footer .gcp-open-status { margin-top: .5rem; }
+
+/* ==========================================================================
+   Floating WhatsApp button
+   ========================================================================== */
 .gcp-whatsapp {
 	position: fixed;
 	right: 18px;
@@ -82,95 +434,29 @@ Text Domain:  pharmacy-child
 	gap: .5em;
 	padding: .75em 1.1em;
 	border-radius: 999px;
-	background: #25d366;
+	background: #25D366;
 	color: #fff;
-	font-weight: 600;
+	font-weight: 700;
 	text-decoration: none;
-	box-shadow: 0 6px 20px rgba(0, 0, 0, .18);
+	box-shadow: 0 10px 24px rgba(0, 0, 0, .2);
 }
 .gcp-whatsapp:hover,
-.gcp-whatsapp:focus { color: #fff; background: #1ebe5b; }
+.gcp-whatsapp:focus { color: #fff; background: #1EBE5B; }
 .gcp-whatsapp svg { width: 22px; height: 22px; fill: currentColor; }
 
 @media (max-width: 600px) {
-	.gcp-whatsapp span { display: none; } /* icon only on phones */
-	.gcp-hero::after { display: none; }
+	.gcp-whatsapp span { display: none; }
+	.gcp-whatsapp { padding: .85em; }
 }
 
-/* ---------- Page sections (used by the page patterns) ---------- */
-.gcp-section {
-	padding-top: clamp(2.5rem, 6vw, 4.5rem);
-	padding-bottom: clamp(2.5rem, 6vw, 4.5rem);
-	padding-left: var(--wp--style--root--padding-left, 1rem);
-	padding-right: var(--wp--style--root--padding-right, 1rem);
+@media (prefers-reduced-motion: reduce) {
+	* { scroll-behavior: auto !important; transition: none !important; }
 }
-.gcp-section + .gcp-section { margin-top: 0; }
-.gcp-cta p { color: inherit; opacity: .9; }
+html { scroll-behavior: smooth; }
 
-.gcp-checklist { list-style: none; padding-left: 0; }
-.gcp-checklist li { position: relative; padding-left: 2rem; margin-bottom: .75rem; }
-.gcp-checklist li::before {
-	content: "";
-	position: absolute;
-	left: 0;
-	top: .2em;
-	width: 1.25rem;
-	height: 1.25rem;
-	border-radius: 50%;
-	background: var(--wp--preset--color--accent-1) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M9.5 16.2 5.3 12l-1.4 1.4 5.6 5.6 12-12-1.4-1.4z'/%3E%3C/svg%3E") center / 70% no-repeat;
-}
+/* Page headings line up with the wide content grid; the health tips article stays narrow */
+.gcp-page-head:not(.gcp-page-head-narrow) > * { max-width: var(--wp--style--global--wide-size) !important; box-sizing: border-box; }
+.gcp-page-head:not(.gcp-page-head-narrow) > p.has-large-font-size { padding-right: max(0px, calc(100% - 60ch)); }
 
-/* Reminder notes and photo placeholders: replace before going live */
-.gcp-note,
-.gcp-photo-placeholder {
-	border: 2px dashed var(--wp--preset--color--accent-6);
-	border-radius: 12px;
-	padding: 1rem 1.25rem;
-	color: var(--wp--preset--color--accent-4);
-	font-size: .95rem;
-}
-.gcp-photo-placeholder { aspect-ratio: 1; display: flex; align-items: center; text-align: center; }
-
-/* ---------- Service icons: add class "gcp-icon gcp-icon-<name>" to a heading ---------- */
-.gcp-icon::before {
-	content: "";
-	display: block;
-	width: 52px;
-	height: 52px;
-	margin-bottom: .9rem;
-	border-radius: 14px;
-	background-color: var(--wp--preset--color--accent-2);
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: 28px;
-}
-/* pill */
-.gcp-icon-rx::before      { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231B7F5C' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M10.5 20.5 3.5 13.5a5 5 0 0 1 7-7l7 7a5 5 0 0 1-7 7Z'/%3E%3Cpath d='m8.5 8.5 7 7'/%3E%3C/svg%3E"); }
-/* speech bubble */
-.gcp-icon-consult::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231B7F5C' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z'/%3E%3Cpath d='M9 11h6M9 14h4'/%3E%3C/svg%3E"); }
-/* heart pulse */
-.gcp-icon-bp::before      { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231B7F5C' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 1 0-7.1 7.1L12 21.5l8.8-8.8a5 5 0 0 0 0-7.1Z'/%3E%3Cpath d='M3.5 12h4l2-3 3 6 2-3h6'/%3E%3C/svg%3E"); }
-/* drop */
-.gcp-icon-sugar::before   { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231B7F5C' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M12 2.5s6.5 7.2 6.5 12a6.5 6.5 0 0 1-13 0c0-4.8 6.5-12 6.5-12Z'/%3E%3C/svg%3E"); }
-/* test tube */
-.gcp-icon-test::before    { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231B7F5C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 3h6M10 3v11.5a2 2 0 0 0 4 0V3'/%3E%3Cpath d='M7 21h10'/%3E%3C/svg%3E"); }
-/* refresh */
-.gcp-icon-refill::before  { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231B7F5C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 11a8 8 0 0 0-14.3-4.9L4 8'/%3E%3Cpath d='M4 3v5h5'/%3E%3Cpath d='M4 13a8 8 0 0 0 14.3 4.9L20 16'/%3E%3Cpath d='M20 21v-5h-5'/%3E%3C/svg%3E"); }
-/* delivery */
-.gcp-icon-delivery::before{ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231B7F5C' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M2 6h11v10H2zM13 9h4.5L21 12.5V16h-8z'/%3E%3Ccircle cx='6' cy='17.5' r='1.8'/%3E%3Ccircle cx='17' cy='17.5' r='1.8'/%3E%3C/svg%3E"); }
-/* shield */
-.gcp-icon-shield::before  { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231B7F5C' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M12 2.5 4 5.5v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10v-6Z'/%3E%3Cpath d='m8.5 12 2.5 2.5 4.5-5'/%3E%3C/svg%3E"); }
-/* baby / family */
-.gcp-icon-family::before  { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231B7F5C' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='8' cy='6' r='2.5'/%3E%3Ccircle cx='17' cy='9' r='2'/%3E%3Cpath d='M3.5 21v-5a4.5 4.5 0 0 1 9 0v5M13.5 21v-3.5a3.5 3.5 0 0 1 7 0V21'/%3E%3C/svg%3E"); }
-
-/* ---------- Health tips list on the homepage ---------- */
-.gcp-tip { border-left: 4px solid var(--wp--preset--color--accent-1); padding-left: 1rem; }
-.gcp-alert {
-	background: #fff4f2;
-	border: 1px solid #f3c7bf;
-	border-radius: 12px;
-	padding: 1rem 1.25rem;
-}
-
-/* ---------- Map ---------- */
-.gcp-map iframe { width: 100%; height: 380px; border: 0; border-radius: 16px; }
+.gcp-section.alignwide { padding-left: 0; padding-right: 0; }
+@media (max-width: 1240px) { .gcp-section.alignwide { padding-left: var(--gcp-gutter); padding-right: var(--gcp-gutter); } }
