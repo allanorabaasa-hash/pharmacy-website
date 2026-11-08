@@ -1,0 +1,26 @@
+/* Pharmacy Stock Manager — admin styles */
+.psm-layout { display: grid; grid-template-columns: 320px 1fr; gap: 24px; align-items: start; margin-top: 16px; }
+.psm-form { background: #fff; border: 1px solid #dcdcde; border-radius: 8px; padding: 4px 20px 20px; }
+.psm-form label { display: block; font-weight: 600; margin-bottom: 4px; }
+.psm-form input.regular-text, .psm-form select { width: 100%; }
+.psm-list .widefat td { vertical-align: middle; }
+.psm-actions { white-space: nowrap; text-align: right; }
+.psm-actions .psm-delete { color: #b32d2e; }
+
+.psm-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin: 20px 0 28px; }
+.psm-card { background: #fff; border: 1px solid #dcdcde; border-left: 4px solid #1b7f5c; border-radius: 8px; padding: 16px 18px; display: flex; flex-direction: column; gap: 4px; }
+.psm-card.warn { border-left-color: #dba617; }
+.psm-card.danger { border-left-color: #d63638; }
+.psm-card-value { font-size: 28px; font-weight: 700; line-height: 1.1; }
+.psm-card-label { color: #50575e; }
+
+.psm-badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+.psm-ok       { background: #e8f5ef; color: #1b7f5c; }
+.psm-warning  { background: #fcf3cf; color: #7a5c00; }
+.psm-critical { background: #fde2cf; color: #9a3d00; }
+.psm-expired  { background: #fbe1e1; color: #a1191a; }
+.psm-rx       { background: #e5eefc; color: #1d4ed8; margin-left: 4px; }
+
+@media (max-width: 960px) {
+	.psm-layout { grid-template-columns: 1fr; }
+}
