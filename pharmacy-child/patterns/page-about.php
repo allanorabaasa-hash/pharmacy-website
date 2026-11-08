@@ -11,8 +11,8 @@
  * @package pharmacy-child
  */
 ?>
-<!-- wp:group {"align":"full","className":"gcp-section","backgroundColor":"accent-2","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull gcp-section has-accent-2-background-color has-background">
+<!-- wp:group {"align":"full","className":"gcp-page-head","backgroundColor":"accent-2","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignfull gcp-page-head has-accent-2-background-color has-background">
 	<!-- wp:heading {"level":1} -->
 	<h1 class="wp-block-heading">About God's Care Pharmacy</h1>
 	<!-- /wp:heading -->

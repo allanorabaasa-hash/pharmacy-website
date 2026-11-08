@@ -11,8 +11,8 @@
  * @package pharmacy-child
  */
 ?>
-<!-- wp:group {"align":"full","className":"gcp-section","backgroundColor":"accent-2","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull gcp-section has-accent-2-background-color has-background">
+<!-- wp:group {"align":"full","className":"gcp-page-head","backgroundColor":"accent-2","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignfull gcp-page-head has-accent-2-background-color has-background">
 	<!-- wp:heading {"level":1} -->
 	<h1 class="wp-block-heading">Contact us</h1>
 	<!-- /wp:heading -->
@@ -22,7 +22,7 @@
 </div>
 <!-- /wp:group -->
 
-<!-- wp:group {"align":"wide","className":"gcp-section","layout":{"type":"constrained"}} -->
+<!-- wp:group {"align":"wide","className":"gcp-section","layout":{"type":"default"}} -->
 <div class="wp-block-group alignwide gcp-section">
 	<!-- wp:columns {"align":"wide"} -->
 	<div class="wp-block-columns alignwide">
