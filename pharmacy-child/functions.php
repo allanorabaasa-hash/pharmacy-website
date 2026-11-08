@@ -7,11 +7,14 @@
 
 defined( 'ABSPATH' ) || exit;
 
+// One-click site setup (Appearance → God's Care setup).
+require_once get_stylesheet_directory() . '/inc/setup.php';
+
 /*
  * ------------------------------------------------------------------
  * Business details used by the theme.
  * God's Care Pharmacy, Ruhandiika Street, Fort Portal City.
- * TODO: confirm opening hours with the pharmacy.
+ * Opening hours: Monday to Saturday 8:00–21:00, Sunday 10:00–18:00.
  * ------------------------------------------------------------------
  */
 define( 'GCP_WHATSAPP', '256745546101' ); // 0745 546 101 in international format.
