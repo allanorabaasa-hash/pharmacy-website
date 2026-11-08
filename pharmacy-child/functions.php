@@ -17,6 +17,17 @@ defined( 'ABSPATH' ) || exit;
 define( 'GCP_WHATSAPP', '256745546101' ); // 0745 546 101 in international format.
 
 /**
+ * URL of a photo the pharmacy uploaded to the Media Library (wp-content/uploads).
+ * Used by the page patterns so the same pattern works on localhost and the live domain.
+ *
+ * @param string $file File name inside the uploads month folder.
+ * @param string $month Year/month folder, e.g. 2026/11.
+ */
+function gcp_img( $file, $month = '2026/11' ) {
+	return esc_url( content_url( 'uploads/' . $month . '/' . $file ) );
+}
+
+/**
  * Opening hours, 24h format, in the pharmacy's time zone (Africa/Kampala).
  * A day set to null is closed.
  */
