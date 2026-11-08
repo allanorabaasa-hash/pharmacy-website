@@ -10,11 +10,11 @@ defined( 'ABSPATH' ) || exit;
 /*
  * ------------------------------------------------------------------
  * Business details used by the theme.
- * TODO: replace with the pharmacy's real WhatsApp number and hours
- *       (confirmed during the client meeting).
+ * God's Care Pharmacy, Ruhandiika Street, Fort Portal City.
+ * TODO: confirm opening hours with the pharmacy.
  * ------------------------------------------------------------------
  */
-define( 'GCP_WHATSAPP', '' ); // International format, digits only, e.g. 2567XXXXXXXX. Empty = button hidden.
+define( 'GCP_WHATSAPP', '256745546101' ); // 0745 546 101 in international format.
 
 /**
  * Opening hours, 24h format, in the pharmacy's time zone (Africa/Kampala).
