@@ -74,19 +74,22 @@
 <div class="wp-block-group alignfull gcp-section has-accent-5-background-color has-background">
 	<!-- wp:columns {"verticalAlignment":"center","align":"wide"} -->
 	<div class="wp-block-columns alignwide are-vertically-aligned-center">
-		<!-- wp:column {"verticalAlignment":"center"} -->
-		<div class="wp-block-column is-vertically-aligned-center">
+		<!-- wp:column {"verticalAlignment":"center","width":"46%"} -->
+		<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:46%">
+			<!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"gcp-photo gcp-photo-tall"} -->
+			<figure class="wp-block-image size-full gcp-photo gcp-photo-tall"><img src="<?php echo gcp_img( 'godscare_reception.jpg' ); ?>" alt="Reception counter at God's Care Pharmacy, Fort Portal"/></figure>
+			<!-- /wp:image -->
+		</div>
+		<!-- /wp:column -->
+
+		<!-- wp:column {"verticalAlignment":"center","width":"54%"} -->
+		<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:54%">
 			<!-- wp:heading -->
 			<h2 class="wp-block-heading">Why families in Fort Portal choose God's Care</h2>
 			<!-- /wp:heading -->
 			<!-- wp:paragraph -->
 			<p>Medicine only helps when it is genuine, stored correctly and taken the right way. We take care of all three, so you can focus on getting better.</p>
 			<!-- /wp:paragraph -->
-		</div>
-		<!-- /wp:column -->
-
-		<!-- wp:column {"verticalAlignment":"center"} -->
-		<div class="wp-block-column is-vertically-aligned-center">
 			<!-- wp:list {"className":"gcp-checklist"} -->
 			<ul class="wp-block-list gcp-checklist">
 				<!-- wp:list-item -->
@@ -174,6 +177,9 @@
 	<div class="wp-block-columns alignwide">
 		<!-- wp:column -->
 		<div class="wp-block-column">
+			<!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"gcp-photo"} -->
+			<figure class="wp-block-image size-full gcp-photo"><img src="<?php echo gcp_img( 'pharmacy_outlook.jpg' ); ?>" alt="Shop front of God's Care Pharmacy on Ruhandiika Street, Fort Portal City"/></figure>
+			<!-- /wp:image -->
 			<!-- wp:heading -->
 			<h2 class="wp-block-heading">Visit us</h2>
 			<!-- /wp:heading -->

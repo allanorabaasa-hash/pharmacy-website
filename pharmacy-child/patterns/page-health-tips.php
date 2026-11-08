@@ -46,6 +46,9 @@
 
 <!-- wp:group {"className":"gcp-section gcp-article","layout":{"type":"constrained"}} -->
 <div class="wp-block-group gcp-section gcp-article">
+	<!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"gcp-photo gcp-photo-wide"} -->
+	<figure class="wp-block-image size-full gcp-photo gcp-photo-wide"><img src="<?php echo gcp_img( 'health_tips.jpg' ); ?>" alt="Pharmacist giving health advice at God's Care Pharmacy"/></figure>
+	<!-- /wp:image -->
 
 	<!-- wp:heading {"anchor":"malaria","className":"gcp-icon gcp-icon-test"} -->
 	<h2 class="wp-block-heading gcp-icon gcp-icon-test" id="malaria">Malaria: prevent it, and test before you treat</h2>

@@ -68,8 +68,23 @@
 	<!-- wp:heading -->
 	<h2 class="wp-block-heading">How to find us</h2>
 	<!-- /wp:heading -->
-	<!-- wp:html -->
-	<div class="gcp-map"><iframe title="Map of Ruhandiika Street, Fort Portal City" src="https://www.google.com/maps?q=Ruhandiika+Street,+Fort+Portal,+Uganda&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
-	<!-- /wp:html -->
+	<!-- wp:columns {"align":"wide"} -->
+	<div class="wp-block-columns alignwide">
+		<!-- wp:column {"width":"60%"} -->
+		<div class="wp-block-column" style="flex-basis:60%">
+			<!-- wp:html -->
+			<div class="gcp-map"><iframe title="Map of Ruhandiika Street, Fort Portal City" src="https://www.google.com/maps?q=Ruhandiika+Street,+Fort+Portal,+Uganda&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+			<!-- /wp:html -->
+		</div>
+		<!-- /wp:column -->
+		<!-- wp:column {"width":"40%"} -->
+		<div class="wp-block-column" style="flex-basis:40%">
+			<!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"gcp-photo gcp-photo-map"} -->
+			<figure class="wp-block-image size-full gcp-photo gcp-photo-map"><img src="<?php echo gcp_img( 'pharmacy_outlook.jpg' ); ?>" alt="Shop front of God's Care Pharmacy, Ruhandiika Street"/><figcaption class="wp-element-caption">Look for our shop front on Ruhandiika Street.</figcaption></figure>
+			<!-- /wp:image -->
+		</div>
+		<!-- /wp:column -->
+	</div>
+	<!-- /wp:columns -->
 </div>
 <!-- /wp:group -->

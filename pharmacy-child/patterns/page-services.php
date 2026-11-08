@@ -24,6 +24,32 @@
 
 <!-- wp:group {"align":"wide","className":"gcp-section","layout":{"type":"default"}} -->
 <div class="wp-block-group alignwide gcp-section">
+	<!-- wp:columns {"align":"wide","className":"gcp-photo-tiles"} -->
+	<div class="wp-block-columns alignwide gcp-photo-tiles">
+		<!-- wp:column -->
+		<div class="wp-block-column">
+			<!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"gcp-photo"} -->
+			<figure class="wp-block-image size-full gcp-photo"><img src="<?php echo gcp_img( 'bloodsugar_testing.jpg' ); ?>" alt="Blood sugar test at God's Care Pharmacy"/><figcaption class="wp-element-caption">Quick health checks</figcaption></figure>
+			<!-- /wp:image -->
+		</div>
+		<!-- /wp:column -->
+		<!-- wp:column -->
+		<div class="wp-block-column">
+			<!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"gcp-photo"} -->
+			<figure class="wp-block-image size-full gcp-photo"><img src="<?php echo gcp_img( 'medical_kit.jpg' ); ?>" alt="First aid and medical supplies available at God's Care Pharmacy"/><figcaption class="wp-element-caption">First aid and everyday health products</figcaption></figure>
+			<!-- /wp:image -->
+		</div>
+		<!-- /wp:column -->
+		<!-- wp:column -->
+		<div class="wp-block-column">
+			<!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"gcp-photo"} -->
+			<figure class="wp-block-image size-full gcp-photo"><img src="<?php echo gcp_img( 'godscare_delivery.jpg' ); ?>" alt="God's Care Pharmacy delivering medicine in Fort Portal"/><figcaption class="wp-element-caption">Delivery within Fort Portal City</figcaption></figure>
+			<!-- /wp:image -->
+		</div>
+		<!-- /wp:column -->
+	</div>
+	<!-- /wp:columns -->
+
 	<!-- wp:columns {"align":"wide"} -->
 	<div class="wp-block-columns alignwide">
 		<!-- wp:column {"className":"gcp-card"} -->

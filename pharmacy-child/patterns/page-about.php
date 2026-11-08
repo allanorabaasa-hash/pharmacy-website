@@ -22,18 +22,45 @@
 </div>
 <!-- /wp:group -->
 
+<!-- wp:group {"align":"full","className":"gcp-section","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignfull gcp-section">
+	<!-- wp:columns {"verticalAlignment":"center","align":"wide"} -->
+	<div class="wp-block-columns alignwide are-vertically-aligned-center">
+		<!-- wp:column {"verticalAlignment":"center","width":"54%"} -->
+		<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:54%">
+			<!-- wp:heading -->
+			<h2 class="wp-block-heading">Who we are</h2>
+			<!-- /wp:heading -->
+			<!-- wp:paragraph -->
+			<p>God's Care Pharmacy serves families, students, workers and visitors in Fort Portal City. People come to us for prescription medicines, quick health checks and honest advice about everyday illnesses such as malaria, colds, stomach upsets and skin conditions.</p>
+			<!-- /wp:paragraph -->
+			<!-- wp:paragraph -->
+			<p>We believe good health care starts with a conversation. Whether you are collecting a prescription or asking about a cough that will not go away, we take time to listen, explain and point you to a doctor when you need one.</p>
+			<!-- /wp:paragraph -->
+		</div>
+		<!-- /wp:column -->
+		<!-- wp:column {"verticalAlignment":"center","width":"46%"} -->
+		<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:46%">
+			<!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"gcp-photo gcp-photo-tall"} -->
+			<figure class="wp-block-image size-full gcp-photo gcp-photo-tall"><img src="<?php echo gcp_img( 'godscare_staff.jpg' ); ?>" alt="The God's Care Pharmacy team in Fort Portal"/></figure>
+			<!-- /wp:image -->
+		</div>
+		<!-- /wp:column -->
+	</div>
+	<!-- /wp:columns -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"align":"full","className":"gcp-band","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignfull gcp-band">
+	<!-- wp:image {"align":"wide","sizeSlug":"full","linkDestination":"none","className":"gcp-photo gcp-photo-wide"} -->
+	<figure class="wp-block-image alignwide size-full gcp-photo gcp-photo-wide"><img src="<?php echo gcp_img( 'fortportal_image.jpg' ); ?>" alt="Fort Portal City, home of God's Care Pharmacy"/><figcaption class="wp-element-caption">Serving Fort Portal City from Ruhandiika Street.</figcaption></figure>
+	<!-- /wp:image -->
+</div>
+<!-- /wp:group -->
+
 <!-- wp:group {"className":"gcp-section","layout":{"type":"constrained"}} -->
 <div class="wp-block-group gcp-section">
-	<!-- wp:heading -->
-	<h2 class="wp-block-heading">Who we are</h2>
-	<!-- /wp:heading -->
-	<!-- wp:paragraph -->
-	<p>God's Care Pharmacy serves families, students, workers and visitors in Fort Portal City. People come to us for prescription medicines, quick health checks and honest advice about everyday illnesses such as malaria, colds, stomach upsets and skin conditions.</p>
-	<!-- /wp:paragraph -->
-	<!-- wp:paragraph -->
-	<p>We believe good health care starts with a conversation. Whether you are collecting a prescription or asking about a cough that will not go away, we take time to listen, explain and point you to a doctor when you need one.</p>
-	<!-- /wp:paragraph -->
-
 	<!-- wp:heading -->
 	<h2 class="wp-block-heading">Our mission</h2>
 	<!-- /wp:heading -->
