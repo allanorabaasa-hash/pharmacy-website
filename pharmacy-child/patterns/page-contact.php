@@ -6,7 +6,7 @@
  * Keywords: contact, map, hours, location
  * Post Types: page
  * Block Types: core/post-content
- * Description: Contact details, opening hours with live status, and a map.
+ * Description: Contact details, opening hours with live status, and a map of Ruhandiika Street, Fort Portal.
  *
  * @package pharmacy-child
  */
@@ -17,7 +17,7 @@
 	<h1 class="wp-block-heading">Contact us</h1>
 	<!-- /wp:heading -->
 	<!-- wp:paragraph {"fontSize":"large"} -->
-	<p class="has-large-font-size">Call, WhatsApp or visit. We are happy to help.</p>
+	<p class="has-large-font-size">Call, WhatsApp or visit us on Ruhandiika Street. We are happy to help.</p>
 	<!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
@@ -32,7 +32,7 @@
 			<h3 class="wp-block-heading">Find us</h3>
 			<!-- /wp:heading -->
 			<!-- wp:paragraph -->
-			<p>[Street or road]<br>[Nearby landmark]<br>[Town], Uganda</p>
+			<p>God's Care Pharmacy<br>Ruhandiika Street<br>Fort Portal City, Uganda</p>
 			<!-- /wp:paragraph -->
 		</div>
 		<!-- /wp:column -->
@@ -42,7 +42,10 @@
 			<h3 class="wp-block-heading">Talk to us</h3>
 			<!-- /wp:heading -->
 			<!-- wp:paragraph -->
-			<p><strong>Phone:</strong> [phone number]<br><strong>WhatsApp:</strong> [WhatsApp number]<br><strong>Email:</strong> info@[yourdomain]</p>
+			<p><strong>Phone:</strong> <a href="tel:+256745546101">0745 546 101</a><br><strong>WhatsApp:</strong> <a href="https://wa.me/256745546101">0745 546 101</a></p>
+			<!-- /wp:paragraph -->
+			<!-- wp:paragraph {"fontSize":"small"} -->
+			<p class="has-small-font-size">For emergencies such as difficulty breathing, chest pain or severe bleeding, go straight to the nearest hospital.</p>
 			<!-- /wp:paragraph -->
 		</div>
 		<!-- /wp:column -->
@@ -55,7 +58,7 @@
 			[gcp_open_status]
 			<!-- /wp:shortcode -->
 			<!-- wp:paragraph -->
-			<p>Monday to Saturday: 8:00 am – 9:00 pm<br>Sunday: 10:00 am – 6:00 pm<br>[Confirm with the pharmacy and update the hours in functions.php to match.]</p>
+			<p>Monday to Saturday: 8:00 am – 9:00 pm<br>Sunday: 10:00 am – 6:00 pm</p>
 			<!-- /wp:paragraph -->
 		</div>
 		<!-- /wp:column -->
@@ -63,10 +66,10 @@
 	<!-- /wp:columns -->
 
 	<!-- wp:heading -->
-	<h2 class="wp-block-heading">Map</h2>
+	<h2 class="wp-block-heading">How to find us</h2>
 	<!-- /wp:heading -->
-	<!-- wp:paragraph {"className":"gcp-note"} -->
-	<p class="gcp-note">[On Google Maps, search the pharmacy, click Share → Embed a map → Copy HTML. Then replace this paragraph with a Custom HTML block and paste the code.]</p>
-	<!-- /wp:paragraph -->
+	<!-- wp:html -->
+	<div class="gcp-map"><iframe title="Map of Ruhandiika Street, Fort Portal City" src="https://www.google.com/maps?q=Ruhandiika+Street,+Fort+Portal,+Uganda&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+	<!-- /wp:html -->
 </div>
 <!-- /wp:group -->
