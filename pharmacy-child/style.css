@@ -4,7 +4,7 @@ Theme URI:    https://github.com/allanorabaasa-hash/pharmacy-website
 Description:  Child theme of Twenty Twenty-Five for God's Care Pharmacy, Fort Portal City. Custom header and footer, dispensing-label hero, page patterns, opening-hours indicator and WhatsApp contact button.
 Author:       Allan
 Template:     twentytwentyfive
-Version:      1.4.0
+Version:      1.5.0
 Requires at least: 6.7
 Requires PHP: 7.4
 License:      GPL-2.0-or-later
@@ -492,4 +492,130 @@ html { scroll-behavior: smooth; }
 	.gcp-photo-tall img { aspect-ratio: 4 / 3; }
 	.gcp-photo-wide img { aspect-ratio: 16 / 9; }
 	.gcp-photo-map img  { height: 260px; }
+}
+
+/* ==========================================================================
+   Hero photo slider (.gcp-slides inside .gcp-hero)
+   ========================================================================== */
+.gcp-hero:has(.gcp-slides) { background-image: none; }
+.gcp-hero > :not(.gcp-slides):not(.gcp-slides-nav) { position: relative; z-index: 1; }
+.gcp-hero > .gcp-slides + * { margin-top: 0; }
+.gcp-hero-grid { min-height: clamp(420px, 58vh, 580px); }
+
+.gcp-hero > .gcp-slides {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	margin: 0 !important;
+	max-width: none !important;
+	overflow: hidden;
+	background: var(--wp--preset--color--accent-3);
+}
+.gcp-slides > .wp-block-image {
+	position: absolute;
+	inset: 0;
+	margin: 0;
+	opacity: 0;
+	transition: opacity 1.4s ease;
+}
+.gcp-slides > .wp-block-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transform: scale(1.02);
+	transition: transform 7s ease-out;
+}
+/* Before the script runs, show the first photo */
+.gcp-slides:not(.is-ready) > .wp-block-image:first-child,
+.gcp-slides > .wp-block-image.is-active { opacity: 1; }
+.gcp-slides > .wp-block-image.is-active img { transform: scale(1.08); }
+
+/* Green overlay keeps the headline readable on any photo */
+.gcp-slides::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	background:
+		linear-gradient(90deg, rgba(15, 59, 51, .96) 0%, rgba(15, 59, 51, .86) 40%, rgba(15, 59, 51, .45) 75%, rgba(15, 59, 51, .3) 100%),
+		linear-gradient(0deg, rgba(15, 59, 51, .55) 0%, rgba(15, 59, 51, 0) 35%);
+}
+
+/* Dots and pause button, aligned with the content's left edge */
+.gcp-slides-nav {
+	position: absolute;
+	z-index: 2;
+	bottom: 1.5rem;
+	left: max(var(--gcp-gutter), calc((100% - var(--wp--style--global--wide-size)) / 2));
+	display: flex;
+	align-items: center;
+	gap: .35rem;
+	margin: 0 !important;
+}
+.gcp-dot,
+.gcp-slides-toggle {
+	appearance: none;
+	border: 0;
+	cursor: pointer;
+	padding: 0;
+	background: none;
+}
+.gcp-dot { width: 34px; height: 24px; position: relative; }
+.gcp-dot::before {
+	content: "";
+	position: absolute;
+	left: 4px;
+	right: 4px;
+	top: 10px;
+	height: 4px;
+	border-radius: 4px;
+	background: rgba(255, 255, 255, .35);
+	transition: background-color .3s ease;
+}
+.gcp-dot:hover::before { background: rgba(255, 255, 255, .7); }
+.gcp-dot[aria-current="true"]::before { background: var(--wp--preset--color--white); }
+.gcp-slides-toggle {
+	width: 28px;
+	height: 28px;
+	margin-left: .4rem;
+	border-radius: 50%;
+	border: 1.5px solid rgba(255, 255, 255, .5);
+	position: relative;
+}
+.gcp-slides-toggle::before,
+.gcp-slides-toggle::after {
+	content: "";
+	position: absolute;
+	top: 8px;
+	width: 3px;
+	height: 9px;
+	background: #fff;
+	border-radius: 1px;
+}
+.gcp-slides-toggle::before { left: 9px; }
+.gcp-slides-toggle::after { left: 14px; }
+.gcp-slides-toggle.is-paused::before {
+	left: 10px;
+	top: 7px;
+	width: 0;
+	height: 0;
+	background: none;
+	border-style: solid;
+	border-width: 6px 0 6px 9px;
+	border-color: transparent transparent transparent #fff;
+}
+.gcp-slides-toggle.is-paused::after { display: none; }
+.gcp-dot:focus-visible,
+.gcp-slides-toggle:focus-visible { outline: 3px solid var(--wp--preset--color--honey); outline-offset: 2px; border-radius: 6px; }
+
+@media (max-width: 781px) {
+	.gcp-slides::after { background: rgba(15, 59, 51, .84); }
+	.gcp-hero-grid { min-height: 0; }
+	.gcp-slides-nav { bottom: 1rem; }
+	.gcp-hero { padding-bottom: 4.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.gcp-slides > .wp-block-image,
+	.gcp-slides > .wp-block-image img { transition: none; transform: none; }
 }

@@ -11,6 +11,23 @@
 ?>
 <!-- wp:group {"align":"full","className":"gcp-hero","backgroundColor":"accent-3","textColor":"accent-2","layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignfull gcp-hero has-accent-2-color has-accent-3-background-color has-text-color has-background">
+	<!-- wp:group {"className":"gcp-slides","layout":{"type":"default"}} -->
+	<div class="wp-block-group gcp-slides">
+		<!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
+		<figure class="wp-block-image size-full"><img src="<?php echo gcp_img( 'homepage_2.jpg' ); ?>" alt="God's Care Pharmacy, Fort Portal City"/></figure>
+		<!-- /wp:image -->
+		<!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
+		<figure class="wp-block-image size-full"><img src="<?php echo gcp_img( 'godscare_reception.jpg' ); ?>" alt="Reception counter at God's Care Pharmacy"/></figure>
+		<!-- /wp:image -->
+		<!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
+		<figure class="wp-block-image size-full"><img src="<?php echo gcp_img( 'homepage_3.jpg' ); ?>" alt="Health care at God's Care Pharmacy"/></figure>
+		<!-- /wp:image -->
+		<!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
+		<figure class="wp-block-image size-full"><img src="<?php echo gcp_img( 'pharmacy_outlook.jpg' ); ?>" alt="Shop front of God's Care Pharmacy on Ruhandiika Street"/></figure>
+		<!-- /wp:image -->
+	</div>
+	<!-- /wp:group -->
+
 	<!-- wp:columns {"verticalAlignment":"center","align":"wide","className":"gcp-hero-grid"} -->
 	<div class="wp-block-columns alignwide are-vertically-aligned-center gcp-hero-grid">
 		<!-- wp:column {"verticalAlignment":"center","width":"58%"} -->
