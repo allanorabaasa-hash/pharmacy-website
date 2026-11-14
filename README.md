@@ -40,25 +40,39 @@ pharmacy-website/
 
 WordPress core, uploads and third-party plugins are **not** kept in Git. Only custom code is versioned.
 
-## Custom module: Pharmacy Stock Manager
+## Custom module: God's Care Pharmacy Manager (`pharmacy-stock/`)
 
-Three related tables (prefix `wp_psm_`):
+One plugin, five related MySQL tables (prefix `wp_psm_`):
 
 ```
-suppliers (id, name, contact_person, phone, email, location, created_at)
+suppliers (id, name, contact_person, phone, email, location)
     1 ──< medicines (id, supplier_id → suppliers.id, name, category, form,
-                     unit_price, requires_prescription, created_at)
+                     unit_price, requires_prescription)
               1 ──< stock_batches (id, medicine_id → medicines.id, batch_no,
-                                   quantity, expiry_date, received_on, created_at)
+                                   quantity, expiry_date, received_on)
+
+services (id, name, description, duration_minutes, price, is_active)
+    1 ──< appointments (id, service_id → services.id, customer_name, phone, email,
+                        appointment_date, appointment_time, channel, status,
+                        customer_note, staff_note)
 ```
 
-- Foreign keys: a supplier cannot be deleted while it still has medicines (`ON DELETE RESTRICT`);
-  deleting a medicine removes its batches (`ON DELETE CASCADE`).
-- **JOINs:** the batch list joins all three tables (medicine + supplier per batch); the medicine
-  list joins suppliers and sums stock; the supplier list counts medicines with a `LEFT JOIN`.
-- **Expiry report:** batches expiring within 90 days, with days remaining.
-- **Full CRUD** for every table, written with `$wpdb->prepare()` (WordPress's prepared statements),
-  protected by nonces and capability checks, with input sanitised and output escaped.
+| Who | What they do with the database |
+|---|---|
+| Owner (Administrator) | Everything, including Settings |
+| Pharmacy Staff (custom role) | Stock, appointments and services only (capability `psm_manage`) |
+| Customers (website) | **Read** stock through the availability search; **create** appointment requests |
+| Examiner | Temporary administrator account, deleted after marking |
+
+**What it does**
+
+- **Stock:** suppliers, medicines and batches with full CRUD; overview of batches expiring within 90 days and expired batches.
+- **Medicine availability search** (`[psm_medicine_search]`): customers see *In stock*, *Few left*, *Out of stock* or *Prescription required*. Quantities, suppliers and batch numbers are never shown; expired batches are ignored.
+- **Appointments** (`[psm_booking_form]`): customers request a service and a time slot within opening hours. The request is saved, the pharmacy is emailed (default `orallan19@gmail.com`, editable in Settings) and the customer gets a confirmation email. Staff confirm, complete, cancel, edit or delete; confirming or cancelling emails the customer. Bookings received on WhatsApp, phone, email or walk-in are added by staff, so every appointment is in one list.
+
+**JOINs used:** batch list (batches + medicines + suppliers), medicine list (medicines + suppliers + summed in-date batches), public search (medicines + batches), appointment list (appointments + services), service and supplier lists (LEFT JOIN counts).
+
+**Security:** every query with user input uses `$wpdb->prepare()`; capability and nonce checks on every admin action; sanitised input and escaped output; foreign keys protect related data; the booking form has a nonce, a hidden spam trap, a per-visitor rate limit, slot double-booking checks and a consent checkbox. Old finished appointments can be purged from Settings (privacy).
 
 ## Local setup (Kali)
 
@@ -86,6 +100,9 @@ Twenty Twenty-Five parent theme installed) and **Plugins → activate "Pharmacy 
 
 - [x] Child theme with brand colours
 - [x] Stock manager plugin (CRUD, JOINs, expiry report)
+- [x] Public medicine availability search
+- [x] Appointment booking with email notifications and a Pharmacy Staff role
 - [ ] Real client content and photos
-- [ ] WooCommerce shop + prescription refill requests
+- [x] Prescription refill page (WhatsApp)
+- [ ] WooCommerce shop (optional: the booking system already covers the business-driven feature)
 - [ ] Deployment to cPanel, SSL, hardening, SEO, speed tests
