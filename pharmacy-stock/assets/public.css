@@ -1,0 +1,145 @@
+/*
+ * God's Care Pharmacy Manager — public styles for the medicine search and
+ * booking form. Uses the theme's colour variables when available, with
+ * sensible fallbacks so the module also works with other themes.
+ */
+.psm-search-wrap,
+.psm-booking-wrap {
+	--psm-green: var(--wp--preset--color--accent-1, #1b7f5c);
+	--psm-forest: var(--wp--preset--color--accent-3, #0f3b33);
+	--psm-grey: var(--wp--preset--color--accent-4, #56675f);
+	--psm-line: var(--wp--preset--color--accent-6, #d7e3dc);
+	--psm-mist: var(--wp--preset--color--accent-2, #eaf4ef);
+	--psm-white: #fff;
+	--psm-radius: 12px;
+}
+
+/* Shared controls */
+.psm-label { display: block; font-weight: 700; font-size: .95rem; color: var(--psm-forest); margin-bottom: .35rem; }
+.psm-optional { font-weight: 400; color: var(--psm-grey); }
+.psm-help { margin: .35rem 0 0; font-size: .88rem; color: var(--psm-grey); }
+.psm-search input,
+.psm-booking input[type="text"],
+.psm-booking input[type="tel"],
+.psm-booking input[type="email"],
+.psm-booking input[type="date"],
+.psm-booking select,
+.psm-booking textarea {
+	width: 100%;
+	box-sizing: border-box;
+	font: inherit;
+	font-size: 1rem;
+	padding: .75rem .9rem;
+	border: 1.5px solid var(--psm-line);
+	border-radius: 10px;
+	background: var(--psm-white);
+	color: inherit;
+}
+.psm-search input:focus,
+.psm-booking input:focus,
+.psm-booking select:focus,
+.psm-booking textarea:focus {
+	outline: none;
+	border-color: var(--psm-green);
+	box-shadow: 0 0 0 3px rgba(27, 127, 92, .18);
+}
+.psm-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: .4rem;
+	font: inherit;
+	font-weight: 700;
+	font-size: 1rem;
+	padding: .8rem 1.3rem;
+	border: 0;
+	border-radius: 10px;
+	background: var(--psm-green);
+	color: var(--psm-white);
+	text-decoration: none;
+	cursor: pointer;
+	white-space: nowrap;
+}
+.psm-btn:hover { background: var(--psm-forest); color: var(--psm-white); }
+.psm-btn:focus-visible { outline: 3px solid #e3b23c; outline-offset: 2px; }
+.psm-btn-wa { background: #25d366; }
+.psm-btn-wa:hover { background: #1ebe5b; }
+.psm-btn-ghost { background: transparent; color: var(--psm-green); border: 1.5px solid currentColor; }
+.psm-btn-ghost:hover { background: var(--psm-green); color: var(--psm-white); }
+.psm-btn-block { width: 100%; margin-top: .5rem; }
+.psm-actions { display: flex; flex-wrap: wrap; gap: .6rem; }
+
+/* Medicine search */
+.psm-search-row { display: flex; gap: .6rem; }
+.psm-search-row input { flex: 1; min-width: 0; }
+.psm-chips { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem; margin: 1.1rem 0 0; }
+.psm-chips-label { color: var(--psm-grey); font-size: .92rem; margin-right: .2rem; }
+.psm-chip {
+	font-size: .88rem;
+	padding: .3rem .75rem;
+	border-radius: 999px;
+	border: 1px solid var(--psm-line);
+	background: var(--psm-white);
+	color: var(--psm-forest);
+	text-decoration: none;
+}
+.psm-chip:hover,
+.psm-chip.is-current { border-color: var(--psm-green); background: var(--psm-mist); }
+
+.psm-results-wrap { margin-top: 2rem; }
+.psm-results-count { font-weight: 700; color: var(--psm-forest); margin: 0 0 .75rem; }
+.psm-results { list-style: none; margin: 0; padding: 0; border: 1px solid var(--psm-line); border-radius: var(--psm-radius); background: var(--psm-white); overflow: hidden; }
+.psm-result {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto auto;
+	align-items: center;
+	gap: 1rem;
+	padding: 1rem 1.25rem;
+	border-bottom: 1px solid var(--psm-line);
+}
+.psm-result:last-child { border-bottom: 0; }
+.psm-result-name { display: block; font-weight: 700; color: var(--psm-forest); }
+.psm-result-meta { display: block; font-size: .9rem; color: var(--psm-grey); }
+.psm-result-status { display: flex; flex-wrap: wrap; gap: .35rem; justify-content: flex-end; }
+.psm-result-cta { font-weight: 700; font-size: .92rem; color: var(--psm-green); white-space: nowrap; }
+.psm-status {
+	display: inline-flex;
+	align-items: center;
+	gap: .4em;
+	font-size: .82rem;
+	font-weight: 700;
+	padding: .25em .7em;
+	border-radius: 999px;
+}
+.psm-status::before { content: ""; width: .5em; height: .5em; border-radius: 50%; background: currentColor; }
+.psm-status.is-in  { background: #e3f4ea; color: #145c3f; }
+.psm-status.is-low { background: #fcf3cf; color: #7a5c00; }
+.psm-status.is-out { background: #fbeae7; color: #8a2a1c; }
+.psm-status.is-rx  { background: #e5eefc; color: #1d4ed8; }
+.psm-status.is-rx::before { display: none; }
+.psm-footnote { font-size: .88rem; color: var(--psm-grey); margin-top: 1rem; }
+.psm-message { padding: 1.25rem 1.4rem; border: 1px solid var(--psm-line); border-radius: var(--psm-radius); background: var(--psm-white); }
+.psm-message p { margin: 0 0 .75rem; }
+.psm-message p:last-child { margin-bottom: 0; }
+
+@media (max-width: 640px) {
+	.psm-search-row { flex-direction: column; }
+	.psm-result { grid-template-columns: 1fr; gap: .5rem; }
+	.psm-result-status { justify-content: flex-start; }
+}
+
+/* Booking form */
+.psm-booking { display: grid; gap: 1.1rem; }
+.psm-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.psm-booking .psm-field-row + .psm-help { margin-top: -.6rem; }
+.psm-consent { display: flex; gap: .65rem; align-items: flex-start; font-size: .93rem; color: var(--psm-grey); }
+.psm-consent input { margin-top: .25rem; width: 1.1rem; height: 1.1rem; accent-color: var(--psm-green); flex: none; }
+.psm-hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.psm-errors { border: 1px solid #f2cfc6; border-left: 4px solid #c2412d; background: #fff5f2; color: #5a2a22; border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 1.25rem; }
+.psm-errors p { margin: 0 0 .4rem; }
+.psm-errors ul { margin: 0; padding-left: 1.2rem; }
+.psm-success { border: 1px solid #bfe3cf; border-left: 4px solid var(--psm-green); background: #f1faf5; border-radius: var(--psm-radius); padding: 1.5rem; }
+.psm-success h3 { margin-top: 0; }
+@media (max-width: 640px) {
+	.psm-field-row { grid-template-columns: 1fr; }
+}
