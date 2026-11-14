@@ -93,7 +93,92 @@ class PSM_DB {
 			) ENGINE=InnoDB $charset"
 		);
 
+		$sv = self::table( 'services' );
+		$ap = self::table( 'appointments' );
+
+		$wpdb->query(
+			"CREATE TABLE IF NOT EXISTS $sv (
+				id               BIGINT UNSIGNED  NOT NULL AUTO_INCREMENT,
+				name             VARCHAR(120)     NOT NULL,
+				description      VARCHAR(255)     DEFAULT NULL,
+				duration_minutes SMALLINT UNSIGNED NOT NULL DEFAULT 15,
+				price            DECIMAL(10,2)    DEFAULT NULL,
+				is_active        TINYINT(1)       NOT NULL DEFAULT 1,
+				created_at       DATETIME         NOT NULL DEFAULT CURRENT_TIMESTAMP,
+				PRIMARY KEY (id),
+				UNIQUE KEY uq_service_name (name)
+			) ENGINE=InnoDB $charset"
+		);
+
+		$wpdb->query(
+			"CREATE TABLE IF NOT EXISTS $ap (
+				id               BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+				service_id       BIGINT UNSIGNED NOT NULL,
+				customer_name    VARCHAR(120)    NOT NULL,
+				phone            VARCHAR(30)     NOT NULL,
+				email            VARCHAR(120)    DEFAULT NULL,
+				appointment_date DATE            NOT NULL,
+				appointment_time TIME            NOT NULL,
+				channel          VARCHAR(20)     NOT NULL DEFAULT 'website',
+				status           VARCHAR(20)     NOT NULL DEFAULT 'pending',
+				customer_note    VARCHAR(500)    DEFAULT NULL,
+				staff_note       VARCHAR(500)    DEFAULT NULL,
+				created_at       DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+				PRIMARY KEY (id),
+				KEY idx_appointment_when (appointment_date, appointment_time),
+				KEY idx_appointment_status (status),
+				KEY idx_appointment_service (service_id),
+				CONSTRAINT fk_psm_appointment_service
+					FOREIGN KEY (service_id) REFERENCES $sv (id)
+					ON UPDATE CASCADE ON DELETE RESTRICT
+			) ENGINE=InnoDB $charset"
+		);
+
+		// Starter services the pharmacy offers (editable under Pharmacy → Services).
+		if ( 0 === (int) $wpdb->get_var( "SELECT COUNT(*) FROM $sv" ) ) {
+			$starter = array(
+				array( 'Pharmacist consultation', 'Advice on symptoms, medicines, side effects or a long-term condition.', 15 ),
+				array( 'Blood pressure check', 'A quick reading with advice on what it means.', 10 ),
+				array( 'Blood sugar test', 'Finger-prick glucose test with advice on the result.', 15 ),
+				array( 'Malaria rapid test', 'Result in about 15 minutes, before you start treatment.', 20 ),
+				array( 'Prescription refill collection', 'Collect a refill we have prepared for you.', 10 ),
+				array( 'Mother and child advice', 'Pregnancy, breastfeeding, baby nutrition and child illness.', 20 ),
+			);
+			foreach ( $starter as $row ) {
+				$wpdb->query(
+					$wpdb->prepare(
+						"INSERT INTO $sv (name, description, duration_minutes) VALUES (%s, %s, %d)",
+						$row[0],
+						$row[1],
+						$row[2]
+					)
+				);
+			}
+		}
+
+		self::install_roles();
 		update_option( 'psm_db_version', PSM_VERSION );
+	}
+
+	/**
+	 * Capability "psm_manage" opens the Pharmacy menu. Administrators get it,
+	 * and the "Pharmacy Staff" role gets only that (least privilege).
+	 */
+	public static function install_roles() {
+		$admin = get_role( 'administrator' );
+		if ( $admin ) {
+			$admin->add_cap( 'psm_manage' );
+		}
+		if ( ! get_role( 'pharmacy_staff' ) ) {
+			add_role(
+				'pharmacy_staff',
+				'Pharmacy Staff',
+				array(
+					'read'       => true,
+					'psm_manage' => true,
+				)
+			);
+		}
 	}
 
 	/* =================================================================
@@ -325,6 +410,288 @@ class PSM_DB {
 		global $wpdb;
 		$b = self::table( 'stock_batches' );
 		return $wpdb->query( $wpdb->prepare( "DELETE FROM $b WHERE id = %d", $id ) );
+	}
+
+	/* =================================================================
+	 * Public medicine availability search (read-only)
+	 * ================================================================= */
+
+	/**
+	 * Find medicines by name or category for the public website.
+	 * Returns only what a customer needs: no quantities leave this method
+	 * beyond the in-date total used to work out the availability label,
+	 * and expired batches are never counted.
+	 *
+	 * @param string $term  What the customer typed.
+	 * @param int    $limit Max results.
+	 */
+	public static function search_medicines( $term, $limit = 20 ) {
+		global $wpdb;
+		$m = self::table( 'medicines' );
+		$b = self::table( 'stock_batches' );
+
+		$like   = '%' . $wpdb->esc_like( $term ) . '%';
+		$starts = $wpdb->esc_like( $term ) . '%';
+
+		return $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT m.id, m.name, m.form, m.category, m.requires_prescription,
+				        COALESCE(SUM(CASE WHEN b.expiry_date >= CURDATE() THEN b.quantity END), 0) AS in_date
+				   FROM $m AS m
+				   LEFT JOIN $b AS b ON b.medicine_id = m.id
+				  WHERE m.name LIKE %s OR m.category LIKE %s
+				  GROUP BY m.id
+				  ORDER BY (m.name LIKE %s) DESC, m.name ASC
+				  LIMIT %d",
+				$like,
+				$like,
+				$starts,
+				$limit
+			)
+		);
+	}
+
+	/* =================================================================
+	 * Services (what customers can book)
+	 * ================================================================= */
+
+	/** READ (list) — LEFT JOIN counts appointments per service. */
+	public static function get_services( $active_only = false ) {
+		global $wpdb;
+		$sv    = self::table( 'services' );
+		$ap    = self::table( 'appointments' );
+		$where = $active_only ? 'WHERE s.is_active = 1' : '';
+
+		return $wpdb->get_results(
+			"SELECT s.*, COUNT(a.id) AS appointment_count
+			   FROM $sv AS s
+			   LEFT JOIN $ap AS a ON a.service_id = s.id
+			   $where
+			  GROUP BY s.id
+			  ORDER BY s.name ASC"
+		);
+	}
+
+	public static function get_service( $id ) {
+		global $wpdb;
+		$sv = self::table( 'services' );
+		return $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $sv WHERE id = %d", $id ) );
+	}
+
+	public static function insert_service( array $d ) {
+		global $wpdb;
+		$sv = self::table( 'services' );
+		return $wpdb->query(
+			$wpdb->prepare(
+				"INSERT INTO $sv (name, description, duration_minutes, price, is_active)
+				 VALUES (%s, %s, %d, NULLIF(%s, ''), %d)",
+				$d['name'],
+				$d['description'],
+				$d['duration_minutes'],
+				$d['price'],
+				$d['is_active']
+			)
+		);
+	}
+
+	public static function update_service( $id, array $d ) {
+		global $wpdb;
+		$sv = self::table( 'services' );
+		return $wpdb->query(
+			$wpdb->prepare(
+				"UPDATE $sv
+				    SET name = %s, description = %s, duration_minutes = %d,
+				        price = NULLIF(%s, ''), is_active = %d
+				  WHERE id = %d",
+				$d['name'],
+				$d['description'],
+				$d['duration_minutes'],
+				$d['price'],
+				$d['is_active'],
+				$id
+			)
+		);
+	}
+
+	/** DELETE. Refused by the database while appointments use it (ON DELETE RESTRICT). */
+	public static function delete_service( $id ) {
+		global $wpdb;
+		$sv = self::table( 'services' );
+		return $wpdb->query( $wpdb->prepare( "DELETE FROM $sv WHERE id = %d", $id ) );
+	}
+
+	/* =================================================================
+	 * Appointments
+	 * ================================================================= */
+
+	/**
+	 * READ (list) — INNER JOIN to show the service name and duration.
+	 *
+	 * @param string $view upcoming | today | pending | past | all
+	 */
+	public static function get_appointments( $view = 'upcoming' ) {
+		global $wpdb;
+		$ap = self::table( 'appointments' );
+		$sv = self::table( 'services' );
+
+		$today = current_time( 'Y-m-d' );
+		switch ( $view ) {
+			case 'today':
+				$where = $wpdb->prepare( 'WHERE a.appointment_date = %s', $today );
+				$order = 'a.appointment_time ASC';
+				break;
+			case 'pending':
+				$where = "WHERE a.status = 'pending'";
+				$order = 'a.appointment_date ASC, a.appointment_time ASC';
+				break;
+			case 'past':
+				$where = $wpdb->prepare( 'WHERE a.appointment_date < %s', $today );
+				$order = 'a.appointment_date DESC, a.appointment_time DESC';
+				break;
+			case 'all':
+				$where = '';
+				$order = 'a.appointment_date DESC, a.appointment_time DESC';
+				break;
+			default: // upcoming: today onwards, still open.
+				$where = $wpdb->prepare( "WHERE a.appointment_date >= %s AND a.status IN ('pending','confirmed')", $today );
+				$order = 'a.appointment_date ASC, a.appointment_time ASC';
+		}
+
+		return $wpdb->get_results(
+			"SELECT a.*, s.name AS service_name, s.duration_minutes
+			   FROM $ap AS a
+			  INNER JOIN $sv AS s ON s.id = a.service_id
+			   $where
+			  ORDER BY $order
+			  LIMIT 300"
+		);
+	}
+
+	/** READ (one), with the service name. */
+	public static function get_appointment( $id ) {
+		global $wpdb;
+		$ap = self::table( 'appointments' );
+		$sv = self::table( 'services' );
+		return $wpdb->get_row(
+			$wpdb->prepare(
+				"SELECT a.*, s.name AS service_name
+				   FROM $ap AS a
+				  INNER JOIN $sv AS s ON s.id = a.service_id
+				  WHERE a.id = %d",
+				$id
+			)
+		);
+	}
+
+	/** CREATE. Returns the new ID, or false. */
+	public static function insert_appointment( array $d ) {
+		global $wpdb;
+		$ap = self::table( 'appointments' );
+		$ok = $wpdb->query(
+			$wpdb->prepare(
+				"INSERT INTO $ap (service_id, customer_name, phone, email, appointment_date, appointment_time,
+				                  channel, status, customer_note, staff_note)
+				 VALUES (%d, %s, %s, NULLIF(%s, ''), %s, %s, %s, %s, NULLIF(%s, ''), NULLIF(%s, ''))",
+				$d['service_id'],
+				$d['customer_name'],
+				$d['phone'],
+				$d['email'],
+				$d['appointment_date'],
+				$d['appointment_time'],
+				$d['channel'],
+				$d['status'],
+				$d['customer_note'],
+				$d['staff_note']
+			)
+		);
+		return $ok ? (int) $wpdb->insert_id : false;
+	}
+
+	/** UPDATE. */
+	public static function update_appointment( $id, array $d ) {
+		global $wpdb;
+		$ap = self::table( 'appointments' );
+		return $wpdb->query(
+			$wpdb->prepare(
+				"UPDATE $ap
+				    SET service_id = %d, customer_name = %s, phone = %s, email = NULLIF(%s, ''),
+				        appointment_date = %s, appointment_time = %s, channel = %s, status = %s,
+				        customer_note = NULLIF(%s, ''), staff_note = NULLIF(%s, '')
+				  WHERE id = %d",
+				$d['service_id'],
+				$d['customer_name'],
+				$d['phone'],
+				$d['email'],
+				$d['appointment_date'],
+				$d['appointment_time'],
+				$d['channel'],
+				$d['status'],
+				$d['customer_note'],
+				$d['staff_note'],
+				$id
+			)
+		);
+	}
+
+	/** UPDATE (status only). */
+	public static function set_appointment_status( $id, $status ) {
+		global $wpdb;
+		$ap = self::table( 'appointments' );
+		return $wpdb->query( $wpdb->prepare( "UPDATE $ap SET status = %s WHERE id = %d", $status, $id ) );
+	}
+
+	/** DELETE. */
+	public static function delete_appointment( $id ) {
+		global $wpdb;
+		$ap = self::table( 'appointments' );
+		return $wpdb->query( $wpdb->prepare( "DELETE FROM $ap WHERE id = %d", $id ) );
+	}
+
+	/** How many open bookings already hold a time slot (double-booking check). */
+	public static function count_slot( $date, $time, $exclude_id = 0 ) {
+		global $wpdb;
+		$ap = self::table( 'appointments' );
+		return (int) $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT COUNT(*) FROM $ap
+				  WHERE appointment_date = %s AND appointment_time = %s
+				    AND status IN ('pending','confirmed') AND id <> %d",
+				$date,
+				$time,
+				$exclude_id
+			)
+		);
+	}
+
+	/** Delete finished (completed/cancelled) appointments older than N days. Returns rows removed. */
+	public static function purge_appointments( $days ) {
+		global $wpdb;
+		$ap = self::table( 'appointments' );
+		return (int) $wpdb->query(
+			$wpdb->prepare(
+				"DELETE FROM $ap
+				  WHERE status IN ('completed','cancelled')
+				    AND appointment_date < DATE_SUB(%s, INTERVAL %d DAY)",
+				current_time( 'Y-m-d' ),
+				$days
+			)
+		);
+	}
+
+	public static function get_appointment_stats() {
+		global $wpdb;
+		$ap    = self::table( 'appointments' );
+		$today = current_time( 'Y-m-d' );
+		return $wpdb->get_row(
+			$wpdb->prepare(
+				"SELECT
+					(SELECT COUNT(*) FROM $ap WHERE appointment_date = %s AND status IN ('pending','confirmed')) AS today,
+					(SELECT COUNT(*) FROM $ap WHERE status = 'pending') AS pending,
+					(SELECT COUNT(*) FROM $ap WHERE appointment_date >= %s AND status IN ('pending','confirmed')) AS upcoming",
+				$today,
+				$today
+			)
+		);
 	}
 
 	/* =================================================================
