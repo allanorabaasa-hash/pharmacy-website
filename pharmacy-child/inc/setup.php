@@ -25,6 +25,8 @@ function gcp_setup_pages() {
 		'about'               => array( 'About', 'pharmacy-child/page-about' ),
 		'services'            => array( 'Services', 'pharmacy-child/page-services' ),
 		'health-tips'         => array( 'Health Tips', 'pharmacy-child/page-health-tips' ),
+		'book-appointment'      => array( 'Book an Appointment', 'pharmacy-child/page-book' ),
+		'medicine-availability' => array( 'Medicine Availability', 'pharmacy-child/page-medicines' ),
 		'prescription-refill' => array( 'Prescription Refill', 'pharmacy-child/page-refill' ),
 		'contact'             => array( 'Contact', 'pharmacy-child/page-contact' ),
 		'health-blog'         => array( 'Health Blog', '' ),
@@ -442,7 +444,7 @@ function gcp_setup_screen() {
 
 		<p>This builds the whole site from the theme's designs in one step:</p>
 		<ul style="list-style:disc;padding-left:1.5em">
-			<li>Creates or refreshes the pages Home, About, Services, Health Tips, Prescription Refill, Contact and Health Blog.</li>
+			<li>Creates or refreshes the pages Home, About, Services, Book an Appointment, Medicine Availability, Health Tips, Prescription Refill, Contact and Health Blog.</li>
 			<li>Sets Home as the homepage and Health Blog as the blog page.</li>
 			<li>Sets the site title, tagline, time zone and "Post name" permalinks.</li>
 			<li>Moves the WordPress "Hello world!" post and "Sample Page" to the trash.</li>
