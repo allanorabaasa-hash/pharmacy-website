@@ -22,6 +22,7 @@
 				<!-- wp:navigation-link {"label":"Home","url":"<?php echo esc_url( home_url( '/' ) ); ?>","kind":"custom"} /-->
 				<!-- wp:navigation-link {"label":"About","url":"<?php echo esc_url( home_url( '/about/' ) ); ?>","kind":"custom"} /-->
 				<!-- wp:navigation-link {"label":"Services","url":"<?php echo esc_url( home_url( '/services/' ) ); ?>","kind":"custom"} /-->
+				<!-- wp:navigation-link {"label":"Medicines","url":"<?php echo esc_url( home_url( '/medicine-availability/' ) ); ?>","kind":"custom"} /-->
 				<!-- wp:navigation-link {"label":"Health Tips","url":"<?php echo esc_url( home_url( '/health-tips/' ) ); ?>","kind":"custom"} /-->
 				<!-- wp:navigation-link {"label":"Contact","url":"<?php echo esc_url( home_url( '/contact/' ) ); ?>","kind":"custom"} /-->
 			<!-- /wp:navigation -->
@@ -29,7 +30,7 @@
 			<!-- wp:buttons {"className":"gcp-header-cta"} -->
 			<div class="wp-block-buttons gcp-header-cta">
 				<!-- wp:button -->
-				<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://wa.me/256745546101">WhatsApp us</a></div>
+				<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( home_url( '/book-appointment/' ) ); ?>">Book appointment</a></div>
 				<!-- /wp:button -->
 			</div>
 			<!-- /wp:buttons -->

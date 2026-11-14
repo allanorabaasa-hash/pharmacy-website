@@ -13,6 +13,54 @@
 ?>
 <!-- wp:pattern {"slug":"pharmacy-child/hero"} /-->
 
+<!-- wp:group {"align":"full","className":"gcp-section gcp-quick","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignfull gcp-section gcp-quick">
+	<!-- wp:columns {"align":"wide"} -->
+	<div class="wp-block-columns alignwide">
+		<!-- wp:column {"width":"58%"} -->
+		<div class="wp-block-column" style="flex-basis:58%">
+			<!-- wp:group {"className":"gcp-card gcp-quick-card","layout":{"type":"default"}} -->
+			<div class="wp-block-group gcp-card gcp-quick-card">
+				<!-- wp:heading {"className":"gcp-quick-title"} -->
+				<h2 class="wp-block-heading gcp-quick-title">Do we have your medicine?</h2>
+				<!-- /wp:heading -->
+				<!-- wp:paragraph -->
+				<p>Check our shelves before you travel. Results come from the stock our team records each day.</p>
+				<!-- /wp:paragraph -->
+				<!-- wp:shortcode -->
+				[psm_medicine_search compact="1" action="/medicine-availability/"]
+				<!-- /wp:shortcode -->
+			</div>
+			<!-- /wp:group -->
+		</div>
+		<!-- /wp:column -->
+
+		<!-- wp:column {"width":"42%"} -->
+		<div class="wp-block-column" style="flex-basis:42%">
+			<!-- wp:group {"className":"gcp-card gcp-quick-card gcp-quick-dark","backgroundColor":"accent-3","textColor":"accent-2","layout":{"type":"default"}} -->
+			<div class="wp-block-group gcp-card gcp-quick-card gcp-quick-dark has-accent-2-color has-accent-3-background-color has-text-color has-background">
+				<!-- wp:heading {"className":"gcp-quick-title","textColor":"white"} -->
+				<h2 class="wp-block-heading gcp-quick-title has-white-color has-text-color">Book a health check</h2>
+				<!-- /wp:heading -->
+				<!-- wp:paragraph -->
+				<p>Blood pressure, blood sugar, malaria tests and pharmacist advice. Pick a time online, on WhatsApp or by email.</p>
+				<!-- /wp:paragraph -->
+				<!-- wp:buttons -->
+				<div class="wp-block-buttons">
+					<!-- wp:button {"backgroundColor":"white","textColor":"accent-3"} -->
+					<div class="wp-block-button"><a class="wp-block-button__link has-accent-3-color has-white-background-color has-text-color has-background wp-element-button" href="<?php echo esc_url( home_url( '/book-appointment/' ) ); ?>">Book an appointment</a></div>
+					<!-- /wp:button -->
+				</div>
+				<!-- /wp:buttons -->
+			</div>
+			<!-- /wp:group -->
+		</div>
+		<!-- /wp:column -->
+	</div>
+	<!-- /wp:columns -->
+</div>
+<!-- /wp:group -->
+
 <!-- wp:group {"align":"full","className":"gcp-section","layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignfull gcp-section">
 	<!-- wp:heading {"textAlign":"center"} -->

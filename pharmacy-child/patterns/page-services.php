@@ -177,15 +177,18 @@
 <!-- wp:group {"align":"full","className":"gcp-section gcp-cta","backgroundColor":"accent-3","textColor":"base","layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignfull gcp-section gcp-cta has-base-color has-accent-3-background-color has-text-color has-background">
 	<!-- wp:heading {"textAlign":"center","textColor":"base"} -->
-	<h2 class="wp-block-heading has-text-align-center has-base-color has-text-color">Not sure what you need?</h2>
+	<h2 class="wp-block-heading has-text-align-center has-base-color has-text-color">Book a check or a chat with our pharmacist</h2>
 	<!-- /wp:heading -->
 	<!-- wp:paragraph {"align":"center"} -->
-	<p class="has-text-align-center">Call or WhatsApp us on 0745 546 101. Advice is free.</p>
+	<p class="has-text-align-center">Choose a time online and skip the wait, or message us on WhatsApp on 0745 546 101. Advice is free.</p>
 	<!-- /wp:paragraph -->
 	<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 	<div class="wp-block-buttons">
 		<!-- wp:button {"backgroundColor":"base","textColor":"accent-3"} -->
-		<div class="wp-block-button"><a class="wp-block-button__link has-accent-3-color has-base-background-color has-text-color has-background wp-element-button" href="https://wa.me/256745546101">Chat on WhatsApp</a></div>
+		<div class="wp-block-button"><a class="wp-block-button__link has-accent-3-color has-base-background-color has-text-color has-background wp-element-button" href="<?php echo esc_url( home_url( '/book-appointment/' ) ); ?>">Book an appointment</a></div>
+		<!-- /wp:button -->
+		<!-- wp:button {"className":"is-style-outline gcp-btn-light"} -->
+		<div class="wp-block-button is-style-outline gcp-btn-light"><a class="wp-block-button__link wp-element-button" href="https://wa.me/256745546101">Chat on WhatsApp</a></div>
 		<!-- /wp:button -->
 	</div>
 	<!-- /wp:buttons -->

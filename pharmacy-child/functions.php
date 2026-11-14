@@ -18,6 +18,7 @@ require_once get_stylesheet_directory() . '/inc/setup.php';
  * ------------------------------------------------------------------
  */
 define( 'GCP_WHATSAPP', '256745546101' ); // 0745 546 101 in international format.
+define( 'GCP_EMAIL', 'orallan19@gmail.com' ); // Bookings and enquiries.
 
 /**
  * URL of a photo the pharmacy uploaded to the Media Library (wp-content/uploads).
@@ -45,6 +46,12 @@ function gcp_opening_hours() {
 		'sun' => array( '10:00', '18:00' ),
 	);
 }
+
+/**
+ * Give the Pharmacy Manager plugin the same opening hours, so appointment
+ * times always match what the website says.
+ */
+add_filter( 'psm_opening_hours', 'gcp_opening_hours' );
 
 /**
  * Load the child theme stylesheet and script.

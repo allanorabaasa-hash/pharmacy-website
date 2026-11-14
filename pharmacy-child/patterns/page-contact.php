@@ -42,7 +42,7 @@
 			<h3 class="wp-block-heading">Talk to us</h3>
 			<!-- /wp:heading -->
 			<!-- wp:paragraph -->
-			<p><strong>Phone:</strong> <a href="tel:+256745546101">0745 546 101</a><br><strong>WhatsApp:</strong> <a href="https://wa.me/256745546101">0745 546 101</a></p>
+			<p><strong>Phone:</strong> <a href="tel:+256745546101">0745 546 101</a><br><strong>WhatsApp:</strong> <a href="https://wa.me/256745546101">0745 546 101</a><br><strong>Email:</strong> <a href="mailto:orallan19@gmail.com">orallan19@gmail.com</a></p>
 			<!-- /wp:paragraph -->
 			<!-- wp:paragraph {"fontSize":"small"} -->
 			<p class="has-small-font-size">For emergencies such as difficulty breathing, chest pain or severe bleeding, go straight to the nearest hospital.</p>

@@ -9,8 +9,6 @@
  * @package pharmacy-child
  */
 
-// Link to the shop once WooCommerce is installed; until then, to Services.
-$gcp_has_shop = class_exists( 'WooCommerce' );
 ?>
 <!-- wp:group {"align":"full","className":"gcp-hero","backgroundColor":"accent-3","textColor":"accent-2","layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignfull gcp-hero has-accent-2-color has-accent-3-background-color has-text-color has-background">
@@ -50,10 +48,10 @@ $gcp_has_shop = class_exists( 'WooCommerce' );
 			<!-- wp:buttons {"className":"gcp-hero-actions"} -->
 			<div class="wp-block-buttons gcp-hero-actions">
 				<!-- wp:button {"backgroundColor":"white","textColor":"accent-3"} -->
-				<div class="wp-block-button"><a class="wp-block-button__link has-accent-3-color has-white-background-color has-text-color has-background wp-element-button" href="<?php echo esc_url( home_url( '/prescription-refill/' ) ); ?>">Request a prescription refill</a></div>
+				<div class="wp-block-button"><a class="wp-block-button__link has-accent-3-color has-white-background-color has-text-color has-background wp-element-button" href="<?php echo esc_url( home_url( '/book-appointment/' ) ); ?>">Book an appointment</a></div>
 				<!-- /wp:button -->
 				<!-- wp:button {"className":"is-style-outline gcp-btn-light"} -->
-				<div class="wp-block-button is-style-outline gcp-btn-light"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( home_url( $gcp_has_shop ? '/shop/' : '/services/' ) ); ?>"><?php echo $gcp_has_shop ? 'Shop health products' : 'See our services'; ?></a></div>
+				<div class="wp-block-button is-style-outline gcp-btn-light"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( home_url( '/medicine-availability/' ) ); ?>">Check if we have your medicine</a></div>
 				<!-- /wp:button -->
 			</div>
 			<!-- /wp:buttons -->
@@ -77,7 +75,7 @@ $gcp_has_shop = class_exists( 'WooCommerce' );
 				<!-- /wp:paragraph -->
 
 				<!-- wp:paragraph {"className":"gcp-label-row"} -->
-				<p class="gcp-label-row"><span class="gcp-label-key">Ask us</span><a href="https://wa.me/256745546101">0745 546 101 on WhatsApp</a></p>
+				<p class="gcp-label-row"><span class="gcp-label-key">Ask us</span><span><a href="https://wa.me/256745546101">0745 546 101 on WhatsApp</a><br><a href="mailto:orallan19@gmail.com">orallan19@gmail.com</a></span></p>
 				<!-- /wp:paragraph -->
 
 				<!-- wp:paragraph {"className":"gcp-label-foot"} -->

@@ -43,7 +43,7 @@
 			<h3 class="wp-block-heading gcp-footer-title">Talk to us</h3>
 			<!-- /wp:heading -->
 			<!-- wp:paragraph -->
-			<p><a href="tel:+256745546101">0745 546 101</a><br><a href="https://wa.me/256745546101">Chat on WhatsApp</a></p>
+			<p><a href="tel:+256745546101">0745 546 101</a><br><a href="https://wa.me/256745546101">Chat on WhatsApp</a><br><a href="mailto:orallan19@gmail.com">orallan19@gmail.com</a></p>
 			<!-- /wp:paragraph -->
 		</div>
 		<!-- /wp:column -->
@@ -55,6 +55,12 @@
 			<!-- /wp:heading -->
 			<!-- wp:list {"className":"gcp-footer-links"} -->
 			<ul class="wp-block-list gcp-footer-links">
+				<!-- wp:list-item -->
+				<li><a href="<?php echo esc_url( home_url( '/book-appointment/' ) ); ?>">Book an appointment</a></li>
+				<!-- /wp:list-item -->
+				<!-- wp:list-item -->
+				<li><a href="<?php echo esc_url( home_url( '/medicine-availability/' ) ); ?>">Medicine availability</a></li>
+				<!-- /wp:list-item -->
 				<!-- wp:list-item -->
 				<li><a href="<?php echo esc_url( home_url( '/about/' ) ); ?>">About us</a></li>
 				<!-- /wp:list-item -->

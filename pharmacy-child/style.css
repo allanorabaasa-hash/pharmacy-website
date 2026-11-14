@@ -4,7 +4,7 @@ Theme URI:    https://github.com/allanorabaasa-hash/pharmacy-website
 Description:  Child theme of Twenty Twenty-Five for God's Care Pharmacy, Fort Portal City. Custom header and footer, dispensing-label hero, page patterns, opening-hours indicator and WhatsApp contact button.
 Author:       Allan
 Template:     twentytwentyfive
-Version:      1.6.0
+Version:      1.7.0
 Requires at least: 6.7
 Requires PHP: 7.4
 License:      GPL-2.0-or-later
@@ -678,3 +678,28 @@ html { scroll-behavior: smooth; }
 @media (max-width: 900px) {
 	.gcp-post-grid .wp-block-post-template.is-layout-grid { grid-template-columns: 1fr; }
 }
+
+/* ==========================================================================
+   Medicine search and booking (God's Care Pharmacy Manager plugin)
+   ========================================================================== */
+.gcp-quick { padding-top: clamp(2.5rem, 5vw, 3.5rem); padding-bottom: 0; }
+.gcp-quick .wp-block-columns { gap: 1.25rem; align-items: stretch; }
+.gcp-quick .wp-block-column { display: flex; }
+.gcp-quick-card { width: 100%; padding: 2rem; }
+.gcp-quick-title { font-size: var(--wp--preset--font-size--x-large) !important; margin: 0 0 .5rem; }
+.gcp-quick-card > p { color: var(--wp--preset--color--accent-4); margin-top: 0; }
+.gcp-quick-dark { border: 0; }
+.gcp-quick-dark > p { color: rgba(234, 244, 239, .86) !important; }
+.gcp-quick .psm-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+.gcp-form-card { padding: clamp(1.5rem, 3vw, 2.25rem); }
+.gcp-form-title { font-size: var(--wp--preset--font-size--x-large) !important; margin: 0 0 1.25rem; }
+.gcp-book-grid { gap: 1.5rem; }
+.gcp-stack-buttons { gap: .6rem; }
+.gcp-btn-wa > .wp-block-button__link { background: #25D366; color: #fff; }
+.gcp-btn-wa > .wp-block-button__link:hover { background: #1EBE5B; color: #fff; }
+.gcp-book-grid .gcp-alert { margin-top: 1.25rem; }
+
+.gcp-legend { margin-top: 2.5rem; gap: 1rem; }
+.gcp-legend p { font-size: .95rem; color: var(--wp--preset--color--accent-4); margin: 0; }
+.gcp-legend strong { color: var(--wp--preset--color--accent-3); }
