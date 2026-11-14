@@ -15,8 +15,8 @@ defined( 'ABSPATH' ) || exit;
 
 class PSM_Admin {
 
-	/** Who may use the module. */
-	const CAP = 'manage_options';
+	/** Who may use the module: administrators and the Pharmacy Staff role. */
+	const CAP = 'psm_manage';
 
 	const CATEGORIES = array( 'Analgesic', 'Antibiotic', 'Antimalarial', 'Antihypertensive', 'Antidiabetic', 'Vitamin / Supplement', 'First Aid', 'Personal Care', 'Baby Care', 'Other' );
 	const FORMS      = array( 'Tablet', 'Capsule', 'Syrup', 'Suspension', 'Injection', 'Cream / Ointment', 'Drops', 'Inhaler', 'Other' );
@@ -33,7 +33,7 @@ class PSM_Admin {
 	 * ================================================================= */
 
 	public function register_menu() {
-		add_menu_page( 'Pharmacy Stock', 'Pharmacy Stock', self::CAP, 'psm-overview', array( $this, 'page_overview' ), 'dashicons-plus-alt', 26 );
+		add_menu_page( 'Pharmacy', 'Pharmacy', self::CAP, 'psm-overview', array( $this, 'page_overview' ), 'dashicons-plus-alt', 26 );
 		add_submenu_page( 'psm-overview', 'Overview', 'Overview', self::CAP, 'psm-overview', array( $this, 'page_overview' ) );
 		add_submenu_page( 'psm-overview', 'Stock Batches', 'Stock Batches', self::CAP, 'psm-batches', array( $this, 'page_batches' ) );
 		add_submenu_page( 'psm-overview', 'Medicines', 'Medicines', self::CAP, 'psm-medicines', array( $this, 'page_medicines' ) );
@@ -171,9 +171,20 @@ class PSM_Admin {
 		$expiring = PSM_DB::get_batches( PSM_DB::EXPIRY_WINDOW );
 		?>
 		<div class="wrap psm">
-			<h1>Pharmacy Stock — Overview</h1>
+			<h1>God's Care Pharmacy — Overview</h1>
 			<?php $this->notice(); ?>
 
+			<?php $appt = PSM_DB::get_appointment_stats(); ?>
+			<div class="psm-cards">
+				<?php
+				$this->card( 'Appointments today', (int) $appt->today );
+				$this->card( 'Waiting for confirmation', (int) $appt->pending, (int) $appt->pending ? 'warn' : '' );
+				$this->card( 'Upcoming appointments', (int) $appt->upcoming );
+				?>
+			</div>
+			<p><a class="button" href="<?php echo esc_url( admin_url( 'admin.php?page=psm-appointments' ) ); ?>">Manage appointments</a></p>
+
+			<h2>Stock</h2>
 			<div class="psm-cards">
 				<?php
 				$this->card( 'Medicines listed', (int) $stats->medicines );
@@ -338,7 +349,7 @@ class PSM_Admin {
 	 * ================================================================= */
 
 	/** Batch table, shared by Overview and Stock Batches. Data comes from the 3-table JOIN. */
-	private function batch_table( $rows, $with_actions ) {
+	protected function batch_table( $rows, $with_actions ) {
 		?>
 		<table class="widefat striped">
 			<thead><tr><th>Medicine</th><th>Batch</th><th>Supplier</th><th>Qty</th><th>Expiry</th><th>Status</th><?php echo $with_actions ? '<th></th>' : ''; ?></tr></thead>
@@ -377,7 +388,7 @@ class PSM_Admin {
 	}
 
 	/** The record being edited, if ?action=edit&id=N is in the URL. */
-	private function editing( $type ) {
+	protected function editing( $type ) {
 		if ( ! isset( $_GET['action'], $_GET['id'] ) || 'edit' !== $_GET['action'] ) {
 			return null;
 		}
@@ -393,7 +404,7 @@ class PSM_Admin {
 		return null;
 	}
 
-	private function form_open( $type, $editing ) {
+	protected function form_open( $type, $editing ) {
 		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">';
 		echo '<input type="hidden" name="action" value="psm_save">';
 		echo '<input type="hidden" name="type" value="' . esc_attr( $type ) . '">';
@@ -401,7 +412,7 @@ class PSM_Admin {
 		wp_nonce_field( 'psm_save_' . $type );
 	}
 
-	private function form_close( $page, $editing ) {
+	protected function form_close( $page, $editing ) {
 		submit_button( $editing ? 'Save changes' : 'Add', 'primary', 'submit', false );
 		if ( $editing ) {
 			echo ' <a class="button" href="' . esc_url( admin_url( 'admin.php?page=' . $page ) ) . '">Cancel</a>';
@@ -409,7 +420,7 @@ class PSM_Admin {
 		echo '</form>';
 	}
 
-	private function field( $name, $label, $value, $type = 'text', $required = false ) {
+	protected function field( $name, $label, $value, $type = 'text', $required = false ) {
 		$extra = 'number' === $type ? ' min="0" step="' . ( 'unit_price' === $name ? 'any' : '1' ) . '"' : '';
 		printf(
 			'<p><label for="psm-%1$s">%2$s</label><input class="regular-text" type="%3$s" id="psm-%1$s" name="%1$s" value="%4$s"%5$s%6$s></p>',
@@ -422,7 +433,7 @@ class PSM_Admin {
 		);
 	}
 
-	private function select( $name, $label, $options, $current ) {
+	protected function select( $name, $label, $options, $current ) {
 		printf( '<p><label for="psm-%1$s">%2$s</label><select id="psm-%1$s" name="%1$s">', esc_attr( $name ), esc_html( $label ) );
 		foreach ( $options as $opt ) {
 			printf( '<option value="%1$s" %2$s>%1$s</option>', esc_attr( $opt ), selected( $current, $opt, false ) );
@@ -430,7 +441,7 @@ class PSM_Admin {
 		echo '</select></p>';
 	}
 
-	private function row_actions( $type, $id, $page, $confirm = 'Delete this record?' ) {
+	protected function row_actions( $type, $id, $page, $confirm = 'Delete this record?' ) {
 		$edit   = add_query_arg(
 			array(
 				'page'   => $page,
@@ -458,7 +469,7 @@ class PSM_Admin {
 		);
 	}
 
-	private function card( $label, $value, $tone = '' ) {
+	protected function card( $label, $value, $tone = '' ) {
 		printf(
 			'<div class="psm-card %s"><span class="psm-card-value">%s</span><span class="psm-card-label">%s</span></div>',
 			esc_attr( $tone ),
@@ -467,7 +478,7 @@ class PSM_Admin {
 		);
 	}
 
-	private function notice() {
+	protected function notice() {
 		$messages = array(
 			'added'     => array( 'success', 'Record added.' ),
 			'updated'   => array( 'success', 'Record updated.' ),
@@ -476,6 +487,14 @@ class PSM_Admin {
 			'duplicate' => array( 'error', 'Could not save — that name or batch number already exists.' ),
 			'in_use'    => array( 'error', 'This supplier still has medicines. Reassign or delete them first.' ),
 			'error'     => array( 'error', 'Something went wrong. Please try again.' ),
+			'confirmed' => array( 'success', 'Appointment confirmed.' ),
+			'completed' => array( 'success', 'Appointment marked as done.' ),
+			'cancelled' => array( 'success', 'Appointment cancelled.' ),
+			'emailed'   => array( 'success', 'Status updated and the customer was emailed.' ),
+			'taken'     => array( 'error', 'That time slot is already fully booked. Choose another time or raise the slot capacity in Settings.' ),
+			'svc_used'  => array( 'error', 'This service has appointments. Untick "Bookable" to hide it instead of deleting it.' ),
+			'saved'     => array( 'success', 'Settings saved.' ),
+			'purged'    => array( 'success', 'Old appointments deleted.' ),
 		);
 		$key = isset( $_GET['psm_msg'] ) ? sanitize_key( $_GET['psm_msg'] ) : '';
 		if ( isset( $messages[ $key ] ) ) {
@@ -484,7 +503,7 @@ class PSM_Admin {
 	}
 
 	/** Redirect back to a page with a message (Post/Redirect/Get, so refresh won't resubmit). */
-	private function redirect( $page, $msg, $edit_id = 0 ) {
+	protected function redirect( $page, $msg, $edit_id = 0 ) {
 		$args = array(
 			'page'    => $page,
 			'psm_msg' => $msg,
@@ -497,17 +516,17 @@ class PSM_Admin {
 		exit;
 	}
 
-	private function text( $key ) {
+	protected function text( $key ) {
 		return isset( $_POST[ $key ] ) ? sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) : '';
 	}
 
-	private function choice( $key, array $allowed ) {
+	protected function choice( $key, array $allowed ) {
 		$value = $this->text( $key );
 		return in_array( $value, $allowed, true ) ? $value : 'Other';
 	}
 
 	/** Returns a valid Y-m-d date or an empty string. */
-	private function date( $key ) {
+	protected function date( $key ) {
 		$value = $this->text( $key );
 		$d     = DateTime::createFromFormat( 'Y-m-d', $value );
 		return ( $d && $d->format( 'Y-m-d' ) === $value ) ? $value : '';
